@@ -1,14 +1,14 @@
-# Templates
+# قالبها - Templates
 
-- [Blade Templating](#blade-templating)
-- [Other Blade Control Structures](#other-blade-control-structures)
+- [کتابخانه ساخت قالب Blade](#blade-templating)
+- [دیگر ساختارهای کنترل Blade](#other-blade-control-structures)
 
 <a name="blade-templating"></a>
-## Blade Templating
+## کتابخانه ساخت قالب Blade
 
-Blade is a simple, yet powerful templating engine provided with Laravel. Unlike controller layouts, Blade is driven by _template inheritance_ and _sections_. All Blade templates should use the `.blade.php` extension.
+Blade یک موتور ساده و در عین حال قدرتمند ایجاد قالب است که همراه لاراول ارائه می شود. برخلاف قالبهای کنترلر، کار Blade برپایه _ارث بری قالبها_ و _بخشها_ بنا شده است. تمامی قالبهای Blade باید از پسوند `blade.php.` استفاده کنند.
 
-#### Defining A Blade Layout
+#### تعریف یک لی اوت(layout) مبتنی بر Blade
 
 	<!-- Stored in resources/views/layouts/master.blade.php -->
 
@@ -27,7 +27,7 @@ Blade is a simple, yet powerful templating engine provided with Laravel. Unlike 
 		</body>
 	</html>
 
-#### Using A Blade Layout
+#### نحوه استفاده از لی اوت Blade
 
 	@extends('layouts.master')
 	
@@ -43,44 +43,44 @@ Blade is a simple, yet powerful templating engine provided with Laravel. Unlike 
 		<p>This is my body content.</p>
 	@stop
 
-Note that views which `extend` a Blade layout simply override sections from the layout. Content of the layout can be included in a child view using the `@@parent` directive in a section, allowing you to append to the contents of a layout section such as a sidebar or footer.
+اگر به viewها دقت کنید یک لی اوت Blade را `extend` میکند. با این کار میتوانید بخشهای مشخص شده جایگزین کنید. در viewهایی که این لی اوت را استفاده میکنند، محتوای لی اوت با استفاده از راهنمای (directive) تعریف شده `parent@@` قابل دسترس است. در این بخشها میتوان محتوای لی اوت را با بخشهایی مانند منوکنار (side bar)، و یا فوتر جانمایی کرد.
 
-Sometimes, such as when you are not sure if a section has been defined, you may wish to pass a default value to the `@yield` directive. You may pass the default value as the second argument:
+گاهی که از تعریف شدن یک بخش اطمینان ندارید، میتوانید یک مقدار پیش فرض به راهنمای `yield@` بفرستید. مقدار پیش فرض را میتوانید به عنوان پارامتر دوم بفرستید:
 
 	@yield('section', 'Default Content')
 
 <a name="other-blade-control-structures"></a>
-## Other Blade Control Structures
+## دیگر ساختارهای کنترلی Blade
 
-#### Echoing Data
+#### چاپ داده
 
 	Hello, {{ $name }}.
 
 	The current UNIX timestamp is {{ time() }}.
 
-#### Echoing Data After Checking For Existence
+#### چاپ داده پس از بررسی وجود
 
-Sometimes you may wish to echo a variable, but you aren't sure if the variable has been set. Basically, you want to do this:
+گاهی میخواهید داده ای را چاپ نمایید اما از مقداردهی شدن آن اطمینان ندارید. به سادگی میتوانید روش زیر را استفاده کنید:
 
 	{{ isset($name) ? $name : 'Default' }}
 
-However, instead of writing a ternary statement, Blade allows you to use the following convenient short-cut:
+Blade به جای استفاده از عبارت ترنری (ternary) بالا، امکان استفاده از ساختار زیر را فراهم میکند:
 
 	{{ $name or 'Default' }}
 
-#### Displaying Raw Text With Curly Braces
+#### نمایش متن خام در آکولاد
 
-If you need to display a string that is wrapped in curly braces, you may escape the Blade behavior by prefixing your text with an `@` symbol:
+اگر میخواهید یک رشته متن را که در آکولاد قراردارد نمایش دهید، میتوانید با استفاده از علامت `@` پیش از متن، از تفسیر آکولادها توسط Blade جلوگیری کنید:
 
-	@{{ This will not be processed by Blade }}
+	@{{ این متن توسط Blade پردازش نمیشود }}
 
-If you don't want the data to be escaped, you may use the following syntax:
+اگر میخواهید داده های درون متن هنوز نمایش داده شوند از قالب زیر استفاده کنید:
 
 	Hello, {!! $name !!}.
 
-> **Note:** Be very careful when echoing content that is supplied by users of your application. Always use the double curly brace syntax to escape any HTML entities in the content.
+> **نکته:** هنگام چاپ محتوایی که توسط کاربران نرم افزار ارائه شده اند بسیار مراقب باشید. همیشه برای نمایش موجودیتهای HTML درون متن از جفت-آکولاد استفاده کنید.
 
-#### If Statements
+#### عبارات if
 
 	@if (count($records) === 1)
 		I have one record!
@@ -94,7 +94,7 @@ If you don't want the data to be escaped, you may use the following syntax:
 		You are not signed in.
 	@endunless
 
-#### Loops
+#### حلقه های تکرار
 
 	@for ($i = 0; $i < 10; $i++)
 		The current value is {{ $i }}
@@ -114,17 +114,17 @@ If you don't want the data to be escaped, you may use the following syntax:
 		<p>I'm looping forever.</p>
 	@endwhile
 
-#### Including Sub-Views
+#### استفاده از زیرviewها
 
 	@include('view.name')
 
-You may also pass an array of data to the included view:
+میتوانید آرایه ای از داده به view استفاده شده بفرستید:
 
 	@include('view.name', ['some' => 'data'])
 
-#### Overwriting Sections
+#### بازنویسی بخشها
 
-To overwrite a section entirely, you may use the `overwrite` statement:
+برای بازنویسی کل یک بخش، میتوانید از عبارت `overwrite` استفاده کنید:
 
 	@extends('list.item.container')
 
@@ -132,13 +132,13 @@ To overwrite a section entirely, you may use the `overwrite` statement:
 		<p>This is an item of type {{ $item->type }}</p>
 	@overwrite
 
-#### Displaying Language Lines
+#### نمایش خطوط زبان
 
 	@lang('language.line')
 
 	@choice('language.line', 1)
 
-#### Comments
+#### کامنتها
 
-	{{-- This comment will not be in the rendered HTML --}}
+	{{-- این بخش در HTML نهایی نخواهد بود --}}
 

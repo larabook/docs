@@ -1,125 +1,125 @@
-# Filesystem / Cloud Storage
+# سیستم فایل / ذخیره سازی ابری
 
-- [Introduction](#introduction)
-- [Configuration](#configuration)
-- [Basic Usage](#basic-usage)
-- [Custom Filesystems](#custom-filesystems)
+- [آشنایی](#introduction)
+- [پیکربندی](#configuration)
+- [کاربرد پایه](#basic-usage)
+- [سیستم فایل اختصاصی](#custom-filesystems)
 
 <a name="introduction"></a>
-## Introduction
+## آشنایی
 
-Laravel provides a wonderful filesystem abstraction thanks to the [Flysystem](https://github.com/thephpleague/flysystem) PHP package by Frank de Jonge. The Laravel Flysystem integration provides simple to use drivers for working with local filesystems, Amazon S3, and Rackspace Cloud Storage. Even better, it's amazingly simple to switch between these storage options as the API remains the same for each system!
+لاراول امکانات فایل سیستم بسیار مفیدی را با اتکا به کتابخانه [Flysystem](https://github.com/thephpleague/flysystem) که یک بسته PHP است ارائه میدهد. این کتابخانه توسط Frank de Jonge تهیه شده است. استفاده لاراول از Flysystem درایورهای ساده ای برای کار با سیستم فایل محلی، Amazon S3، و فضای ذخیره سازی ابری Rackspace فراهم می آورد. یکسان بودن API برای همه این گزینه ها سوئیچ بین آنها را ساده میکند.
 
 <a name="configuration"></a>
-## Configuration
+## پیکربندی
 
-The filesystem configuration file is located at `config/filesystems.php`. Within this file you may configure all of your "disks". Each disk represents a particular storage driver and storage location. Example configurations for each supported driver is included in the configuration file. So, simply modify the configuration to reflect your storage preferences and credentials!
+فایل پیکربندی سیستم فایل، در مسیر `config/filesystems.php` قرار دارد. در این فایل میتوانید تمامی دیسکهایتان را پیکربندی نمایید. هر دیسک نماینده یک درایور ذخیره سازی است، پیکربندی نمونه برای هر درایور پشتیبانی شده در فایل پیکربندی ارائه شده است. بنابراین، به سادگی میتوانید با تغییر مقادیر، تنظیمات پیکربندی و مجوزهای دسترسی مربوط به فضای ذخیره سازی خود را جایگزین کنید!
 
-Before using the S3 or Rackspace drivers, you will need to install the appropriate package via Composer:
+پیش از استفاده از درایورهای S3 و Rackspace، باید بسته های متناسب را با استفاده از کامپوزر نصب کنید:
 
 - Amazon S3: `league/flysystem-aws-s3-v2 ~1.0`
 - Rackspace: `league/flysystem-rackspace ~1.0`
 
-Of course, you may configure as many disks as you like, and may even have multiple disks that use the same driver.
+البته، هر تعداد دیسک را که بخواهید میتوانید تنظیم کنید و یا میتوانید چندین دیسک با درایور مشابه داشته باشید.
 
-When using the `local` driver, note that all file operations are relative to the `root` directory defined in your configuration file. By default, this value is set to the `storage/app` directory. Therefore, the following method would store a file in `storage/app/file.txt`:
+هنگامی که از یک درایور `local` استفاده میکنید، توجه داشته باشید تمامی عملیات فایلی که انجام میدهید نسبت به دایرکتوری `root` که در فایل پیکربندی معرفی کرده اید انجام می شود. به صورت پیش فرض، این مقدار برابر با دایرکتوری `storage/app` مقداردهی شده است. بنابراین، متد زیر فایل را در آدرس `storage/app/file.txt` ذخیره مینماید:
 
 	Storage::disk('local')->put('file.txt', 'Contents');
 
 <a name="basic-usage"></a>
-## Basic Usage
+## کاربرد ابتدایی
 
-The `Storage` facade may be used to interact with any of your configured disks. Alternatively, you may type-hint the `Illuminate\Contracts\Filesystem\Factory` contract on any class that is resolved via the Laravel [service container](/docs/{{version}}/container).
+برای کار با هر یک از دیسکهای پیکربندی شده می توانید از فاساد `Storage` استفاده نمایید. به جای آن، میتوانید کانترکت `Illuminate\Contracts\Filesystem\Factory` را بر روی هر کلاسی که توسط [service container](/docs/%7B%7Bversion%7D%7D/container) لاراول شناخته می شود، تایپ هینت کنید.
 
-#### Retrieving A Particular Disk
+#### بازیابی یک دیسک مشخص
 
 	$disk = Storage::disk('s3');
 
 	$disk = Storage::disk('local');
 
-#### Determining If A File Exists
+#### تعیین وجود یک فایل
 
 	$exists = Storage::disk('s3')->exists('file.jpg');
 
-#### Calling Methods On The Default Disk
+#### فراخوانی متدها بر روی دیسک پیش فرض
 
 	if (Storage::exists('file.jpg'))
 	{
 		//
 	}
 
-#### Retrieving A File's Contents
+#### بازیابی محتوای یک فایل
 
 	$contents = Storage::get('file.jpg');
 
-#### Setting A File's Contents
+#### مقداردهی محتوای فایل
 
 	Storage::put('file.jpg', $contents);
 
-#### Prepend To A File
+#### افزودن به ابتدای یک فایل
 
 	Storage::prepend('file.log', 'Prepended Text');
 
-#### Append To A File
+#### افزودن به انتهای یک فایل
 
 	Storage::append('file.log', 'Appended Text');
 
-#### Delete A File
+#### حذف یک فایل
 
 	Storage::delete('file.jpg');
 
 	Storage::delete(['file1.jpg', 'file2.jpg']);
 
-#### Copy A File To A New Location
+#### کپی یک فایل در یک مکان جدید
 
 	Storage::copy('old/file1.jpg', 'new/file1.jpg');
 
-#### Move A File To A New Location
+#### جابجایی یک فایل به یک مکان جدید
 
 	Storage::move('old/file1.jpg', 'new/file1.jpg');
 
-#### Get File Size
+#### گرفتن اندازه یک فایل
 
 	$size = Storage::size('file1.jpg');
 
-#### Get The Last Modification Time (UNIX)
+#### خواندن آخرین زمان ویرایش یک فایل (UNIX)
 
 	$time = Storage::lastModified('file1.jpg');
 
-#### Get All Files Within A Directory
+#### خواندن تمامی فایلهای یک دایرکتوری
 
 	$files = Storage::files($directory);
 
 	// Recursive...
 	$files = Storage::allFiles($directory);
 
-#### Get All Directories Within A Directory
+#### خواندن تمامی دایرکتوریهای درون یک دایرکتوری
 
 	$directories = Storage::directories($directory);
 
 	// Recursive...
 	$directories = Storage::allDirectories($directory);
 
-#### Create A Directory
+#### ایجاد یک دایرکتوری
 
 	Storage::makeDirectory($directory);
 
-#### Delete A Directory
+#### حذف یک دایرکتوری
 
 	Storage::deleteDirectory($directory);
 
 <a name="custom-filesystems"></a>
-## Custom Filesystems
+## سیستمهای فایل اختصاصی
 
-Laravel's Flysystem integration provides drivers for several "drivers" out of the box; however, Flysystem is not limited to these and has adapters for many other storage systems. You can create a custom driver if you want to use one of these additional adapters in your Laravel application. Don't worry, it's not too hard!
+ترکیب لاراول با Flysystem درایورهایی بسیاری ارائه میکند؛ هر چند Flysystem محدود به این فایل سیستمها نیست و مبدلهایی برای سیستمهای ذخیره سازی بسیار دیگری ارائه می دهد. میتوانید برای استفاده از آنها در نرم افزارهای لاراول خود درایورهای اختصاصی تولید نمایید. نگران نباشید، چندان سخت نیست!
 
-In order to set up the custom filesystem you will need to create a service provider such as `DropboxFilesystemServiceProvider`. In the provider's `boot` method, you can inject an instance of the `Illuminate\Contracts\Filesystem\Factory` contract and call the `extend` method of the injected instance. Alternatively, you may use the `Disk` facade's `extend` method.
+برای ایجاد یک سیستم فایل جدید شما باید یک service provider مانند `DropboxFilesystemServiceProvider` ایجاد نمایید. در متد `boot` مربوط به provider باید نمونه ای از کانترکت `Illuminate\Contracts\Filesystem\Factory` را تزریق نمایید و متد `extend` را برای نمونه تزریق شده فراخوانی کنید. در روشی دیگر میتوانید از متد `extend` فاساد `Disk` استفاده کنید.
 
-The first argument of the `extend` method is the name of the driver and the second is a Closure that receives the `$app` and `$config` variables. The resolver Closure must return an instance of `League\Flysystem\Filesystem`.
+آرگومان اول متد `extend` نام درایور است، و آرگومان دوم کلوژری است که متغیرهای `$app` و `$config` را دریافت میکند. به کلوژر resolver باید نمونه ای از کلاس `League\Flysystem\Filesystem` ارسال کنید.
 
-> **Note:** The $config variable will already contain the values defined in `config/filesystems.php` for the specified disk.
+> **نکته:** متغیر $config حاوی تمامی مقادیر تعریف شده در `config/filesystems.php` برای دیسک مشخص شده است.
 
-#### Dropbox Example
+#### مثال Dropbox
 
 	<?php namespace App\Providers;
 

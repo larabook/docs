@@ -1,18 +1,18 @@
-# Helper Functions
+# تابع های کمکی - Helpers
 
-- [Arrays](#arrays)
-- [Paths](#paths)
-- [Routing](#routing)
+- [آرایه ها - Arrays](#arrays)
+- [مسیرها - Paths](#paths)
+- [نگاشت مسیر - Routing](#routing)
 - [Strings](#strings)
 - [URLs](#urls)
-- [Miscellaneous](#miscellaneous)
+- [متنوع](#miscellaneous)
 
 <a name="arrays"></a>
-## Arrays
+## آرایه ها - Arrays
 
 ### array_add
 
-The `array_add` function adds a given key / value pair to the array if the given key doesn't already exist in the array.
+تابع `array_add` در صورتی که دوتایی کلید / مقدار در آرایه وجود نداشته باشد، آن را به آرایه می افزاید.
 
 	$array = ['foo' => 'bar'];
 
@@ -20,7 +20,7 @@ The `array_add` function adds a given key / value pair to the array if the given
 
 ### array_divide
 
-The `array_divide` function returns two arrays, one containing the keys, and the other containing the values of the original array.
+تابع `array_divide` دو آرایه بازمیگرداند، یکی شامل کلیدها و دیگری مقادیر موجود در آرایه اولیه.
 
 	$array = ['foo' => 'bar'];
 
@@ -28,7 +28,7 @@ The `array_divide` function returns two arrays, one containing the keys, and the
 
 ### array_dot
 
-The `array_dot` function flattens a multi-dimensional array into a single level array that uses "dot" notation to indicate depth.
+تابع `array_dot` آرایه های چندبعدی را به آرایه تک بعدی کاهش بعد داده و امکان دسترسی به عمق آرایه با استفاده از "." فراهم میکند.
 
 	$array = ['foo' => ['bar' => 'baz']];
 
@@ -38,13 +38,13 @@ The `array_dot` function flattens a multi-dimensional array into a single level 
 
 ### array_except
 
-The `array_except` method removes the given key / value pairs from the array.
+تابع `array_except` دوتایی کلید / مقدار را از آرایه حذف میکند.
 
 	$array = array_except($array, ['keys', 'to', 'remove']);
 
 ### array_fetch
 
-The `array_fetch` method returns a flattened array containing the selected nested element.
+تابع `array_fetch` آرایه ای تک بعدی شامل مقادیر کلید داده شده باز میگرداند.
 
 	$array = [
 		['developer' => ['name' => 'Taylor']],
@@ -57,7 +57,7 @@ The `array_fetch` method returns a flattened array containing the selected neste
 
 ### array_first
 
-The `array_first` method returns the first element of an array passing a given truth test.
+تابع `array_first` اولین عنصر یک آرایه که شرط ارائه شده را داشته باشد باز میگرداند.
 
 	$array = [100, 200, 300];
 
@@ -66,13 +66,13 @@ The `array_first` method returns the first element of an array passing a given t
 		return $value >= 150;
 	});
 
-A default value may also be passed as the third parameter:
+یک مقدار پیش فرض را نیز به عنوان پارامتر سوم میتوان به تابع فرستاد:
 
 	$value = array_first($array, $callback, $default);
 
 ### array_last
 
-The `array_last` method returns the last element of an array passing a given truth test.
+تابع `array_last` آخرین عنصر آرایه ای که شرط ارائه شده در مورد آن صادق باشد را برمیگرداند.
 
 	$array = [350, 400, 500, 300, 200, 100];
 
@@ -83,13 +83,13 @@ The `array_last` method returns the last element of an array passing a given tru
 
 	// 500
 
-A default value may also be passed as the third parameter:
+یک مقدار پیش فرض را نیز به عنوان پارامتر سوم میتوان به تابع فرستاد:
 
 	$value = array_last($array, $callback, $default);
 
 ### array_flatten
 
-The `array_flatten` method will flatten a multi-dimensional array into a single level.
+تابع `array_flatten` یک آرایه چند بعدی را تبدیل به آرایه ای تک بعدی مینماید.
 
 	$array = ['name' => 'Joe', 'languages' => ['PHP', 'Ruby']];
 
@@ -99,7 +99,7 @@ The `array_flatten` method will flatten a multi-dimensional array into a single 
 
 ### array_forget
 
-The `array_forget` method will remove a given key / value pair from a deeply nested array using "dot" notation.
+تابع `array_forget` یک دوتایی را از عمق آرایه ای تو در تو با استفاده از "." حذف مینماید.
 
 	$array = ['names' => ['joe' => ['programmer']]];
 
@@ -107,7 +107,7 @@ The `array_forget` method will remove a given key / value pair from a deeply nes
 
 ### array_get
 
-The `array_get` method will retrieve a given value from a deeply nested array using "dot" notation.
+تابع `array_get` یک مقدار داده شده را از عمق یک آرایه چند بعدی با استفاده از "." باز میگرداند.
 
 	$array = ['names' => ['joe' => ['programmer']]];
 
@@ -115,11 +115,11 @@ The `array_get` method will retrieve a given value from a deeply nested array us
 
 	$value = array_get($array, 'names.john', 'default');
 
-> **Note:** Want something like `array_get` but for objects instead? Use `object_get`.
+> **نکته:** چیزی شبیه به `array_get` اما برای اشیاء لازم دارید؟ از `object_get` استفاده کنید.
 
 ### array_only
 
-The `array_only` method will return only the specified key / value pairs from the array.
+متد `array_only` تنها دوتاییهای مشخص شده را از آرایه بازمیگرداند.
 
 	$array = ['name' => 'Joe', 'age' => 27, 'votes' => 1];
 
@@ -127,7 +127,7 @@ The `array_only` method will return only the specified key / value pairs from th
 
 ### array_pluck
 
-The `array_pluck` method will pluck a list of the given key / value pairs from the array.
+متد `array_pluck` لیستی از دوتایی های کلید / مقدار را از آرایه ایجاد میکند.
 
 	$array = [['name' => 'Taylor'], ['name' => 'Dayle']];
 
@@ -137,7 +137,7 @@ The `array_pluck` method will pluck a list of the given key / value pairs from t
 
 ### array_pull
 
-The `array_pull` method will return a given key / value pair from the array, as well as remove it.
+متد `array_pull` پس از بازگرداندن یک دوتایی کلید / مقدار از یک آرایه، آن را حذف میکند.
 
 	$array = ['name' => 'Taylor', 'age' => 27];
 
@@ -145,7 +145,7 @@ The `array_pull` method will return a given key / value pair from the array, as 
 
 ### array_set
 
-The `array_set` method will set a value within a deeply nested array using "dot" notation.
+متد `array_set` مقدار را در عمق یک آرایه با استفاده از "." مقداردهی میکند.
 
 	$array = ['names' => ['programmer' => 'Joe']];
 
@@ -153,7 +153,7 @@ The `array_set` method will set a value within a deeply nested array using "dot"
 
 ### array_sort
 
-The `array_sort` method sorts the array by the results of the given Closure.
+متد `array_sort` آرایه را با توجه به نتایج کلوژر ارائه شده مرتب سازی میکند.
 
 	$array = [
 		['name' => 'Jill'],
@@ -167,7 +167,7 @@ The `array_sort` method sorts the array by the results of the given Closure.
 
 ### array_where
 
-Filter the array using the given Closure.
+آرایه را با استفاده از کلوژر ارائه شده فیلتر مینماید.
 
 	$array = [100, '200', 300, '400', 500];
 
@@ -180,77 +180,77 @@ Filter the array using the given Closure.
 
 ### head
 
-Return the first element in the array.
+اولین عنصر در آرایه را بازمیگرداند.
 
 	$first = head($this->returnsArray('foo'));
 
 ### last
 
-Return the last element in the array. Useful for method chaining.
+آخرین عنصر آرایه را بازمیگرداند. در فراخوانی زنجیره ای متدها کاربرد دارد.
 
 	$last = last($this->returnsArray('foo'));
 
 <a name="paths"></a>
-## Paths
+## مسیرها - Paths
 
 ### app_path
 
-Get the fully qualified path to the `app` directory.
+مسیر کامل دایرکتوری `app` را بازمیگرداند.
 
 	$path = app_path();
 
 ### base_path
 
-Get the fully qualified path to the root of the application install.
+مسیر کامل محل نصب پروژه را باز میگرداند.
 
 ### config_path
 
-Get the fully qualified path to the `config` directory.
+مسیر کامل به دایرکتوری `config` را بازمیگرداند.
 
 ### public_path
 
-Get the fully qualified path to the `public` directory.
+مسیرکامل دایرکتوری `public` را بازمیگرداند.
 
 ### storage_path
 
-Get the fully qualified path to the `storage` directory.
+مسیر کامل دایرکتوری `storage` را بازمیگرداند.
 
 <a name="routing"></a>
 ## Routing
 
 ### get
 
-Register a new GET route with the router.
+route جدیدی از نوع GET را ثبت میکند.
 
 	get('/', function() { return 'Hello World'; });
 
 ### post
 
-Register a new POST route with the router.
+route جدیدی از نوع POST را ثبت میکند.
 
 	post('foo/bar', 'FooController@action');
 
 ### put
 
-Register a new PUT route with the router.
+route جدیدی از نوع PUT را ثبت میکند.
 
 	put('foo/bar', 'FooController@action');
 
 ### patch
 
-Register a new PATCH route with the router.
+route جدیدی از نوع PATCH را ثبت میکند.
 
 	patch('foo/bar', 'FooController@action');
 
 ### delete
 
-Register a new DELETE route with the router.
+route جدیدی از نوع DELETE را ثبت میکند.
 
 	delete('foo/bar', 'FooController@action');
 	
 ### resource
 
-Register a new RESTful resource route with the router.
+route جدیدی از نوع منبع RESTful را ثبت میکند.
 
 	resource('foo', 'FooController');
 
@@ -259,7 +259,7 @@ Register a new RESTful resource route with the router.
 
 ### camel_case
 
-Convert the given string to `camelCase`.
+یک رشته متن داده شده را به `camelCase` تبدیل میکند.
 
 	$camel = camel_case('foo_bar');
 
@@ -267,7 +267,7 @@ Convert the given string to `camelCase`.
 
 ### class_basename
 
-Get the class name of the given class, without any namespace names.
+نام کلاس داده شده را بدون فضای نام (namespace) ارائه میکند.
 
 	$class = class_basename('Foo\Bar\Baz');
 
@@ -275,19 +275,19 @@ Get the class name of the given class, without any namespace names.
 
 ### e
 
-Run `htmlentities` over the given string, with UTF-8 support.
+تابع `htmlentities` را بر روی یک string با پشتیبانی از UTF-8 اجرا میکند.
 
 	$entities = e('<html>foo</html>');
 
 ### ends_with
 
-Determine if the given haystack ends with a given needle.
+بررسی میکند آیا رشته ارائه شده به مقدار مورد نظر ختم می شود.
 
 	$value = ends_with('This is my name', 'name');
 
 ### snake_case
 
-Convert the given string to `snake_case`.
+رشته ارائه شده را به `snake_case` تبدیل میکند.
 
 	$snake = snake_case('fooBar');
 
@@ -295,7 +295,7 @@ Convert the given string to `snake_case`.
 
 ### str_limit
 
-Limit the number of characters in a string.
+تعداد کاراکترها را در یک رشته به اندازه پارامتر ارائه شده محدود میکند.
 
 	str_limit($value, $limit = 100, $end = '...')
 
@@ -307,19 +307,20 @@ Example:
 
 ### starts_with
 
-Determine if the given haystack begins with the given needle.
+بررسی میکند آیا رشته ارائه شده با مقدار مورد نظر شروع می شود.
 
 	$value = starts_with('This is my name', 'This');
+	
 
 ### str_contains
 
-Determine if the given haystack contains the given needle.
+وجود مقدار داده شده در رشته متن را بررسی میکند.
 
 	$value = str_contains('This is my name', 'my');
 
 ### str_finish
 
-Add a single instance of the given needle to the haystack. Remove any extra instances.
+مقدار ارائه شده را برای یکبار به رشته متن می افزاید. بقیه مقادیر را حذف میکند.
 
 	$string = str_finish('this/string', '/');
 
@@ -327,35 +328,35 @@ Add a single instance of the given needle to the haystack. Remove any extra inst
 
 ### str_is
 
-Determine if a given string matches a given pattern. Asterisks may be used to indicate wildcards.
+همخوانی یک رشته متنی با الگوی ارائه شده را بررسی میکند. برای مشخص کردن وجود "هر" مقدار میتوانید از علامت * استفاده کنید.
 
 	$value = str_is('foo*', 'foobar');
 
 ### str_plural
 
-Convert a string to its plural form (English only).
+یک رشته را به فرم جمع تبدیل میکند (تنها در زبان انگلیسی).
 
 	$plural = str_plural('car');
 
 ### str_random
 
-Generate a random string of the given length.
+رشته ای تصادفی ا زکاراکترها با طول داده شده ایجاد میکند.
 
 	$string = str_random(40);
 
 ### str_singular
 
-Convert a string to its singular form (English only).
+رشته را به شکل مفرد تبدیل میکند (تنها در زبان انگلیسی).
 
 	$singular = str_singular('cars');
 
 ### str_slug
 
-Generate a URL friendly "slug" from a given string.
+از یک رشته متن یک عبارت خوش فرم برای URL میسازد.
 
 	str_slug($title, $separator);
 
-Example:
+مثال:
 
 	$title = str_slug("Laravel 5 Framework", "-");
 
@@ -363,7 +364,7 @@ Example:
 
 ### studly_case
 
-Convert the given string to `StudlyCase`.
+رشته متنی را به `StudlyCase` تبدیل میکند.
 
 	$value = studly_case('foo_bar');
 
@@ -371,13 +372,13 @@ Convert the given string to `StudlyCase`.
 
 ### trans
 
-Translate a given language line. Alias of `Lang::get`.
+ترجمه یک متن را با توجه به زبان انتخاب شده جایگزین میکند. آلیاس (Alias) برای `Lang::get`.
 
 	$value = trans('validation.required'):
 
 ### trans_choice
 
-Translate a given language line with inflection. Alias of `Lang::choice`.
+یک متن را با توجه به تعداد کلمات مشخص شده ترجمه میکند. آلیاس (Alias) برای `Lang::choice`
 
 	$value = trans_choice('foo.bar', $count);
 
@@ -386,37 +387,37 @@ Translate a given language line with inflection. Alias of `Lang::choice`.
 
 ### action
 
-Generate a URL for a given controller action.
+URL برای مربوط به یک متد کنترلررا ارائه مینماید.
 
 	$url = action('HomeController@getIndex', $params);
 
 ### route
 
-Generate a URL for a given named route.
+URL متناظر با یک route نامگذاری شده را ایجاد میکند.
 
 	$url = route('routeName', $params);
 
 ### asset
 
-Generate a URL for an asset.
+URL مربوط به منابع استاتیک (عکس، جاوااسکریپت، css) را ایجاد میکند.
 
 	$url = asset('img/photo.jpg');
 
 ### secure_asset
 
-Generate a URL for an asset using HTTPS.
+ایجاد URL مربوط به منابع استاتیک با استفاده از HTTPS.
 
 	echo secure_asset('foo/bar.zip', $title, $attributes = []);
 
 ### secure_url
 
-Generate a fully qualified URL to a given path using HTTPS.
+ایجاد URL کامل به یک مسیر مشخص شده در قالب HTTPS.
 
 	echo secure_url('foo/bar', $parameters = []);
 
 ### url
 
-Generate a fully qualified URL to the given path.
+URL کامل برای یک مسیر مشخص شده ایجاد میکند.
 
 	echo url('foo/bar', $parameters = [], $secure = null);
 
@@ -425,48 +426,48 @@ Generate a fully qualified URL to the given path.
 
 ### csrf_token
 
-Get the value of the current CSRF token.
+مقدار توکن CSRF فعلی را باز میگرداند.
 
 	$token = csrf_token();
 
 ### dd
 
-Dump the given variable and end execution of the script.
+متغیر مشخص شده را چاپ میکند و اجرای اسکریپت را متوقف میکند.
 
 	dd($value);
 
 ### elixir
 
-Get the path to a versioned Elixir file.
+مسیر فایل ورژن گذاری شده Elixir را باز میگرداند.
 
 	elixir($file);
 
 ### env
 
-Gets the value of an environment variable or return a default value.
+مقدار متغیر محلی را باز میگرداند. در صورت نداشتن مقدار مقدار پیش فرض را باز میگرداند.
 
 	env('APP_ENV', 'production')
 
 ### event
 
-Fire an event.
+اجرای یک رویداد
 
 	event('my.event');
 
 ### value
 
-If the given value is a `Closure`, return the value returned by the `Closure`. Otherwise, return the value.
+اگر مقدار داده شده `Closure` باشد، مقدار بازگردانده شده توسط `Closure` را باز میگرداند. در غیراینصورت مقدار مشخص شده را بازمیگرداند.
 
 	$value = value(function() { return 'bar'; });
 
 ### view
 
-Get a View instance for the given view path.
+نمونه View برای مسیر view مشخص شده را بازمیگرداند.
 
 	return view('auth.login');
 
 ### with
 
-Return the given object.
+شی مشخص شده را بازمیگرداند.
 
 	$value = with(new Foo)->doWork();
