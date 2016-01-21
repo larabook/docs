@@ -1,39 +1,39 @@
-# Validation
+# درستی سنجی - Validation
 
-- [Basic Usage](#basic-usage)
-- [Controller Validation](#controller-validation)
-- [Form Request Validation](#form-request-validation)
-- [Working With Error Messages](#working-with-error-messages)
-- [Error Messages & Views](#error-messages-and-views)
-- [Available Validation Rules](#available-validation-rules)
-- [Conditionally Adding Rules](#conditionally-adding-rules)
-- [Custom Error Messages](#custom-error-messages)
-- [Custom Validation Rules](#custom-validation-rules)
+- [کاربرد پایه](#basic-usage)
+- [درستی سنجی کنترلر](#controller-validation)
+- [درستی سنجی درخواستهای فرم](#form-request-validation)
+- [کار با پیغامهای خطا](#working-with-error-messages)
+- [پیغامهای خطا و viewها](#error-messages-and-views)
+- [قوانین درستی سنجی موجود](#available-validation-rules)
+- [افزودن قوانین متناسب با شرایط](#conditionally-adding-rules)
+- [پیغامهای خطای اختصاصی شده](#custom-error-messages)
+- [قوانین درستی سنجی اختصاصی شده](#custom-validation-rules)
 
 <a name="basic-usage"></a>
-## Basic Usage
+## کاربرد پایه
 
-Laravel ships with a simple, convenient facility for validating data and retrieving validation error messages via the `Validator` class.
+لاراول یک ابزار ساده برای درستی سنجی داده و بازیابی پیامهای درستی سنجی با استفاده از کلاس `Validator` ارائه میدهد.
 
-#### Basic Validation Example
+#### مثالهای ابتدایی از درستی سنجی
 
 	$validator = Validator::make(
 		['name' => 'Dayle'],
 		['name' => 'required|min:5']
 	);
 
-The first argument passed to the `make` method is the data under validation. The second argument is the validation rules that should be applied to the data.
+داده ای که میخواهید درستی سنجی شود را به عنوان اولین آرگومان به متد `make` بفرستید. آرگومان دوم قوانین درستی سنجی مورد استفاده برای این کار هستند.
 
-#### Using Arrays To Specify Rules
+#### استفاده از آرایه ها برای مشخص کردن قوانین
 
-Multiple rules may be delimited using either a "pipe" character, or as separate elements of an array.
+قوانین را میتوانید با استفاده از "خط عمودی یا |" و یا عناصر مجزای یک آرایه بفرستید.
 
 	$validator = Validator::make(
 		['name' => 'Dayle'],
 		['name' => ['required', 'min:5']]
 	);
 
-#### Validating Multiple Fields
+#### درستی سنجی چندین فیلد
 
 	$validator = Validator::make(
 		[
@@ -48,28 +48,28 @@ Multiple rules may be delimited using either a "pipe" character, or as separate 
 		]
 	);
 
-Once a `Validator` instance has been created, the `fails` (or `passes`) method may be used to perform the validation.
+پس از ایجاد یک نمونه از کلاس `Validator` میتوانید از متدهای `fails` (یا `pass`) برای انجام درستی سنجی استفاده کنید.
 
 	if ($validator->fails())
 	{
 		// The given data did not pass validation
 	}
 
-If validation has failed, you may retrieve the error messages from the validator.
+در صورتی که درستی اطلاعات تایید نشود، میتوانید پیامهای خطا را با استفاده از کلاس بازیابی کنید.
 
 	$messages = $validator->messages();
 
-You may also access an array of the failed validation rules, without messages. To do so, use the `failed` method:
+همچنین با استفاده از متد `failed` میتوانید قانونهایی که اعث رد درستی سنجی شده اند را هم بازایابی نمایید. این متد پیامها را بازنمیگرداند:
 
 	$failed = $validator->failed();
 
-#### Validating Files
+#### درستی سنجی فایلها
 
-The `Validator` class provides several rules for validating files, such as `size`, `mimes`, and others. When validating files, you may simply pass them into the validator with your other data.
+کلاس `Validator` قانونهای بسیاری برای درستی سنجی فایلها ارائه می نماید، مانند `size`، `mimes`. برای درستی سنجی فایلها میتوانید آنها را به همراه دیگر اطلاعات به ارزیابی کننده اطلاعات بفرستید.
 
-### After Validation Hook
+### پستهای بعد از درستی سنجی
 
-The validator also allows you to attach callbacks to be run after validation is completed. This allows you to easily perform further validation, and even add more error messages to the message collection. To get started, use the `after` method on a validator instance:
+امکان انجام عملیاتهای زنجیروار پس از انجام درستی سنجی نیز وجود دارد. این امکان شما را قادر میسازد، درستی سنجیهای بیشتری انجام دهید، و همچنین امکان افزودن پیامهای خطای بیشتر به مجموعه پیغامها فراهم میکند. برای شروع، از متد `after` بر روی نمونه کلاس درستی سنجی استفاده کنید:
 
 	$validator = Validator::make(...);
 
@@ -86,12 +86,12 @@ The validator also allows you to attach callbacks to be run after validation is 
 		//
 	}
 
-You may add as many `after` callbacks to a validator as needed.
+به هر تعداد کالبک `after` که بخواهید میتوانید بیافزایید.
 
 <a name="controller-validation"></a>
-## Controller Validation
+## درستی سنجی کنترلر
 
-Of course, manually creating and checking a `Validator` instance each time you do validation is a headache. Don't worry, you have other options! The base `App\Http\Controllers\Controller` class included with Laravel uses a `ValidatesRequests` trait. This trait provides a single, convenient method for validating incoming HTTP requests. Here's what it looks like:
+مسلما ایجاد دستی نمونه ای از `Validator` هربار که میخواهید داده ای را درستی سنجی کنید کاردشواری است. نگران نباشید، گزینه های دیگری هم دارید! کلاس پایه `App\Http\Controllers\Controller` در لاراول از تریت `ValidatesRequest` استفاده میکند. این تریت یک روش ساده برای درستی سنجی درخواستهای HTTP ارائه مینماید. نحوه استفاده از آن در ادامه آورده شده:
 
 	/**
 	 * Store the incoming blog post.
@@ -109,11 +109,11 @@ Of course, manually creating and checking a `Validator` instance each time you d
 		//
 	}
 
-If validation passes, your code will keep executing normally. However, if validation fails, an `Illuminate\Contracts\Validation\ValidationException` will be thrown. This exception is automatically caught and a redirect is generated to the user's previous location. The validation errors are even automatically flashed to the session!
+در صورت تایید درستی، کد شما به روال طبیعی اجرا ادامه میدهد. و در صورت رد درستی اکسپشن `Illuminate\Contracts\Validation\ValidationException` ایجاد میشود. این اکسپشن به صورت خودکار ایجاد میشود و کاربر به مکان پیشین خود ریدایرکت میشود. پیغامهای خطای ایجاد شده هم به session اضاف می شوند.
 
-If the incoming request was an AJAX request, no redirect will be generated. Instead, an HTTP response with a 422 status code will be returned to the browser containing a JSON representation of the validation errors.
+اگر درخواست ایجاد شده از نوع AJAX باشد، ریدایرکت ایجاد نمیشود. به جای آن یک پاسخ HTTP با کد وضعیت 422 حاوی پیامهای درستی سنجی در قالب JSON به مرورگر فرستاده می شود.
 
-For example, here is the equivalent code written manually:
+برای مثال، در اینجا کد معادل که دستی نوشته شده است ارائه شده است:
 
 	/**
 	 * Store the incoming blog post.
@@ -136,9 +136,9 @@ For example, here is the equivalent code written manually:
 		//
 	}
 
-### Customizing The Flashed Error Format
+### اختصاصی سازی قالب خطاهای درستی سنجی
 
-If you wish to customize the format of the validation errors that are flashed to the session when validation fails, override the `formatValidationErrors` on your base controller. Don't forget to import the `Illuminate\Validation\Validator` class at the top of the file:
+اگر میخواهید قالب خطاهای درستی سنجی ارائه شده هنگام رد درستی را تغییر داده، اختصاصی کنید، `formatValidationErrors` را در کنترلر پایه بازنویسی نمایید. فراموش نکنید باید کلاس `Illuminate\Validation\Validator` را در بالای کلاس وارد نمایید:
 
 	/**
 	 * {@inheritdoc}
@@ -149,13 +149,13 @@ If you wish to customize the format of the validation errors that are flashed to
 	}
 
 <a name="form-request-validation"></a>
-## Form Request Validation
+## درستی سنجی درخواستهای فرم
 
-For more complex validation scenarios, you may wish to create a "form request". Form requests are custom request classes that contain validation logic. To create a form request class, use the `make:request` Artisan CLI command:
+برای سناریوهای پیچیده تر درستی سنجی، میتوانید یک "درخواست فرم" ایجاد نمایید. درخواستهای فرم کلاسهای درخواست اختصاصی هستند که منطق درستی سنجی در آنها تعریف شده است. برای ایجاد کلاس درخواست فرم، از فرمان آرتیزان `make:request` استفاده کنید:
 
 	php artisan make:request StoreBlogPostRequest
 
-The generated class will be placed in the `app/Http/Requests` directory. Let's add a few validation rules to the `rules` method:
+کلاس ایجاد شده در دایرکتوری `app/Http/Requests` قرارخواهد گرفت. میتوانید قوانین درستی سنجی را به متد `rules` اضافه کنید:
 
 	/**
 	 * Get the validation rules that apply to the request.
@@ -170,7 +170,7 @@ The generated class will be placed in the `app/Http/Requests` directory. Let's a
 		];
 	}
 
-So, how are the validation rules executed? All you need to do is type-hint the request on your controller method:
+حال، قوانین درستی سنجی چگونه اجرا می شوند؟ تمامی کاری که باید انجام دهید اعلام این موضوع در متد کنترلرتان است:
 
 	/**
 	 * Store the incoming blog post.
@@ -183,13 +183,13 @@ So, how are the validation rules executed? All you need to do is type-hint the r
 		// The incoming request is valid...
 	}
 
-The incoming form request is validated before the controller method is called, meaning you do not need to clutter your controller with any validation logic. It has already been validated!
+درستی سنجی درخواست فرم ایجاد شده پیش از اجرای کنترلر می شود. با این کار کد و منطق کنترلر شما با منطق درستی سنجی ترکیب نمیشود. درستی سنجی پیش از این انجام شده است.
 
-If validation fails, a redirect response will be generated to send the user back to their previous location. The errors will also be flashed to the session so they are available for display. If the request was an AJAX request, a HTTP response with a 422 status code will be returned to the user including a JSON representation of the validation errors.
+در صورت تایید نشدن درستی، یک ریدایرکت برای فریتادن کاربر به مکان پیشین ایجاد می شود. خطاها نیز به session افزوده می شوند و برای نمایش در دسترس هستند. در صورتی که درخواست از نوع AJAX باشد، یک پاسخ HTTP با کد وضعیت 422 حاوی پیامهای درستی سنجی در قالب JSON به مرورگر فرستاده می شود.
 
 ### Authorizing Form Requests
 
-The form request class also contains an `authorize` method. Within this method, you may check if the authenticated user actually has the authority to update a given resource. For example, if a user is attempting to update a blog post comment, do they actually own that comment? For example:
+کلاس درخواست فرم شامل یک متد `authorize` هم میباشد. در این متد، میتوانید امکان به روزرسانی یک منبع توسط کاربر مشخص را بررسی نمایید. برای مثال، اگر یک کاربر میخواهد کامنت یک پست بلاگ  را به روزرسانی کند، باید بررسی شود آیا کامنت را خود او گذاشته است؟ یا هر منطق دیگری. برای مثال: 
 
 	/**
 	 * Determine if the user is authorized to make this request.
@@ -204,13 +204,13 @@ The form request class also contains an `authorize` method. Within this method, 
                       ->where('user_id', Auth::id())->exists();
 	}
 
-Note the call to the `route` method in the example above. This method grants you access to the URI parameters defined on the route being called, such as the `{comment}` parameter in the example below:
+به فراخوانی متد `route` در مثال بالا توجه نمایید. این متد به شما امکان دسترسی به پارامترهای URI تعریف شده بر روی روت فراخوانی شده را می دهد، مانند پارامتر `{comment}` در مثال پایین:
 
 	Route::post('comment/{comment}');
 
-If the `authorize` method returns `false`, a HTTP response with a 403 status code will automatically be returned and your controller method will not execute.
+اگر متد `authorize` مقدار `false` برگرداند، یک پاسخ HTTP با کد وضعیت 403 به طو رخودکار بازگردانده می شود و متد کنترلر اجرا نمی شود.
 
-If you plan to have authorization logic in another part of your application, simply return `true` from the `authorize` method:
+اگر برنامه ای برای منطق احراز هویت در بخش دیگری از برنامه دارید، کافیست مقدار خروجی متد `authorize` را `true` بازگردانید:
 
 	/**
 	 * Determine if the user is authorized to make this request.
@@ -222,9 +222,9 @@ If you plan to have authorization logic in another part of your application, sim
 		return true;
 	}
 
-### Customizing The Flashed Error Format
+### اختصاصی سازی قالب خطاها
 
-If you wish to customize the format of the validation errors that are flashed to the session when validation fails, override the `formatErrors` on your base request (`App\Http\Requests\Request`). Don't forget to import the `Illuminate\Validation\Validator` class at the top of the file:
+اگر میخواهید قالب خطاهای درستی سنجی که پس از رد درستی در session قرار میگیرند را تغییر داده، اختصاصی نمایید، بر روی درخواست پایه (`App\Http\Requests\Request`) مقدار `formatErrors` را بازنویسی نمایید. فراموش نکنید کلاس `Illuminate\Validation\Validator` را به کلاس خود وارد نمایید:
 
 	/**
 	 * {@inheritdoc}
@@ -235,42 +235,42 @@ If you wish to customize the format of the validation errors that are flashed to
 	}
 
 <a name="working-with-error-messages"></a>
-## Working With Error Messages
+## کار با پیغامهای خطا
 
-After calling the `messages` method on a `Validator` instance, you will receive a `MessageBag` instance, which has a variety of convenient methods for working with error messages.
+پس از فراخوانی متد `messages` بر روی نمونه `Validator`، نمونه ای از کلاس `MessageBag` دریافت خواهید نمود، که دارای تعداد زیادی متد برای کار با پیامهای خطاست.
 
-#### Retrieving The First Error Message For A Field
+#### بازیابی اولین پیام خطا برای یک فیلد
 
 	echo $messages->first('email');
 
-#### Retrieving All Error Messages For A Field
+#### بازیابی تمامی پیامهای خطا برای یک فیلد
 
 	foreach ($messages->get('email') as $message)
 	{
 		//
 	}
 
-#### Retrieving All Error Messages For All Fields
+#### بازیابی تمامی پیامهای خطا برای تمامی فیلدها
 
 	foreach ($messages->all() as $message)
 	{
 		//
 	}
 
-#### Determining If Messages Exist For A Field
+#### بررسی وجود پیام برای یک فیلد
 
 	if ($messages->has('email'))
 	{
 		//
 	}
 
-#### Retrieving An Error Message With A Format
+#### بازیابی یک پیام خطا با یک قالب
 
 	echo $messages->first('email', '<p>:message</p>');
 
-> **Note:** By default, messages are formatted using Bootstrap compatible syntax.
+> **نکته:** به صورت پیش فرض پیامها با استفاده از قالب سازگار با بوت استرپ (Bootstrap) قالب بندی شده اند.
 
-#### Retrieving All Error Messages With A Format
+#### بازیابی تمامی پیامهای خطا با یک قالب مشخص
 
 	foreach ($messages->all('<li>:message</li>') as $message)
 	{
@@ -278,9 +278,9 @@ After calling the `messages` method on a `Validator` instance, you will receive 
 	}
 
 <a name="error-messages-and-views"></a>
-## Error Messages & Views
+## پیامهای خطا و viewها
 
-Once you have performed validation, you will need an easy way to get the error messages back to your views. This is conveniently handled by Laravel. Consider the following routes as an example:
+پس از انجام درستی سنجی، باید راه سریعی برای انتقال پیامها به view داشته باشید. این کار به راحتی توسط لاراول انجام می شود. routeهای زیر را به عنوان مثال در نظر بگیرید:
 
 	Route::get('register', function()
 	{
@@ -299,48 +299,48 @@ Once you have performed validation, you will need an easy way to get the error m
 		}
 	});
 
-Note that when validation fails, we pass the `Validator` instance to the Redirect using the `withErrors` method. This method will flash the error messages to the session so that they are available on the next request.
+توجه داشته باشید هنگامی که درستی رد می شود، با استفاده از متد `withErrors` نمونه ای از کلاس `Validator` را به Redirect میفرستیم. این متد پیامهای خطا را به session اضاف میکند تا در درخواست بعدی قابل استفاده باشند.
 
-However, notice that we do not have to explicitly bind the error messages to the view in our GET route. This is because Laravel will always check for errors in the session data, and automatically bind them to the view if they are available. **So, it is important to note that an `$errors` variable will always be available in all of your views, on every request**, allowing you to conveniently assume the `$errors` variable is always defined and can be safely used. The `$errors` variable will be an instance of `MessageBag`.
+توجه کنید نیازی به بایندکردن پیامهای خطا به view در روت GET نیست. دلیل این موضوع چک کردن داده های session توسط لاراول هست، و در صورتی که چیزی پیدا بشه در view قابل دسترسی خواهد بود. **بنابراین توجه به این نکته که متغیر `$errors` در تمام viewها و در تمام درخواستها وجود خواهد داشت**، به شما اطمینان خاطر میدهد که متغیر `$errors` همیشه وجود دارد و بی دغدغه میتوانید از آن استفاده کنید. متغیر `$errors` نمونه ای از کلاس `MessageBag` است.
 
-So, after redirection, you may utilize the automatically bound `$errors` variable in your view:
+بنابراین پس از ریدایرکت، میتوانید از متغیر `$errors` که خودکار به session اضافه شده است در view استفاده کنید:
 
 	<?php echo $errors->first('email'); ?>
 
-### Named Error Bags
+### بسته های خطای نامگذاری شده - Named Error Bags
 
-If you have multiple forms on a single page, you may wish to name the `MessageBag` of errors. This will allow you to retrieve the error messages for a specific form. Simply pass a name as the second argument to `withErrors`:
+اگر چندین فرم بر روی یک صفحه دارید، میتوانید برای `MessageBag` مربوط به خطاها نام تعیین کنید. این کار به شما امکان بازیابی پیامهای خطای مربوط به هر فرم را میدهد. این کار را به سادگی با فرستادن یک نام به آرگومان دوم `withErrors` انجام دهید:
 
 	return redirect('register')->withErrors($validator, 'login');
 
-You may then access the named `MessageBag` instance from the `$errors` variable:
+با نامگذاری میتوانید با استفاده از آن به نمونه کلاس `MessageBag` از متغیر `$errors` دسترسی داشته باشید:
 
 	<?php echo $errors->login->first('email'); ?>
 
 <a name="available-validation-rules"></a>
-## Available Validation Rules
+## قوانین درستی سنجی موجود
 
-Below is a list of all available validation rules and their function:
+در ادامه لیستی از قوانین درستی سنجی موجود و کاربردهای آنها ارائه شده است:
 
-- [Accepted](#rule-accepted)
-- [Active URL](#rule-active-url)
-- [After (Date)](#rule-after)
-- [Alpha](#rule-alpha)
+- [مورد پذیرش - Accepted](#rule-accepted)
+- [URL فعال - Active URL](#rule-active-url)
+- [پس از  (تاریخ) - After (Date)](#rule-after)
+- [آلفا - Alpha](#rule-alpha)
 - [Alpha Dash](#rule-alpha-dash)
 - [Alpha Numeric](#rule-alpha-num)
-- [Array](#rule-array)
-- [Before (Date)](#rule-before)
-- [Between](#rule-between)
+- [آرایه - Array](#rule-array)
+- [پیش از (تاریخ) - Before (Date)](#rule-before)
+- [بیش از - Between](#rule-between)
 - [Boolean](#rule-boolean)
-- [Confirmed](#rule-confirmed)
-- [Date](#rule-date)
-- [Date Format](#rule-date-format)
-- [Different](#rule-different)
-- [Digits](#rule-digits)
-- [Digits Between](#rule-digits-between)
+- [تاییدشده - Confirmed](#rule-confirmed)
+- [تاریخ - Date](#rule-date)
+- [قالب تاریخ - Date Format](#rule-date-format)
+- [اختلاف - Different](#rule-different)
+- [رقمها - Digits](#rule-digits)
+- [رقمهای بین - Digits Between](#rule-digits-between)
 - [E-Mail](#rule-email)
-- [Exists (Database)](#rule-exists)
-- [Image (File)](#rule-image)
+- [وجود داشتن( پایگاه داده) - Exists (Database)](#rule-exists)
+- [عکس (فایل) - Image (File)](#rule-image)
 - [In](#rule-in)
 - [Integer](#rule-integer)
 - [IP Address](#rule-ip)
@@ -364,223 +364,223 @@ Below is a list of all available validation rules and their function:
 - [URL](#rule-url)
 
 <a name="rule-accepted"></a>
-#### accepted
+#### پذیرفته شده - accepted
 
-The field under validation must be _yes_, _on_, _1_, or _true_. This is useful for validating "Terms of Service" acceptance.
+فیلدی که درsتی سنجی می شود باید دارای مقادیر _yes_، _no_، _1_، یا _true_ باشد. این قانون برای درستی سنجی پذیرفتن "قوانین خدمات  - Terms of Service" کاربرد دارد.
 
 <a name="rule-active-url"></a>
 #### active_url
 
-The field under validation must be a valid URL according to the `checkdnsrr` PHP function.
+فیلدی که درستی سنجی می شود باید براساس تابع `checkdnsrr` در PHP باید یک URL صحیح باشد.
 
 <a name="rule-after"></a>
 #### after:_date_
 
-The field under validation must be a value after a given date. The dates will be passed into the PHP `strtotime` function.
+فیلدی که درستی سنجی می شود باید حاوی مقداری پس از تاریخ ارائه شده باشد. تاریخها به تابع `strtotime` از PHP فرستاده می شوند.
 
 <a name="rule-alpha"></a>
 #### alpha
 
-The field under validation must be entirely alphabetic characters.
+فیلدی که مورد درستی سنجی قرار میگیرد باید تمام حاوی کاراکترهای حروف باشد.
 
 <a name="rule-alpha-dash"></a>
 #### alpha_dash
 
-The field under validation may have alpha-numeric characters, as well as dashes and underscores.
+فیلد مورد نظرسنجی میتواند حاوی کاراکترهای عددی و حرف، همچنین خط تیره "-" و همینطور "_" باشد.
 
 <a name="rule-alpha-num"></a>
 #### alpha_num
 
-The field under validation must be entirely alpha-numeric characters.
+فیلد مورد درستی سنجی باید تمام حاوی کاراکترهای عدی-رقمی باشد.
 
 <a name="rule-array"></a>
 #### array
 
-The field under validation must be of type array.
+فیلد مورد درستی سنجی باید از نوع آرایه باشد.
 
 <a name="rule-before"></a>
 #### before:_date_
 
-The field under validation must be a value preceding the given date. The dates will be passed into the PHP `strtotime` function.
+فیلدی که درستی سنجی میشود باید تاریخی پیش از تاریخ داده شده باشد. تاریخها به تابع `strtotime` از PHP فرستاده می شوند.
 
 <a name="rule-between"></a>
 #### between:_min_,_max_
 
-The field under validation must have a size between the given _min_ and _max_. Strings, numerics, and files are evaluated in the same fashion as the `size` rule.
+فیلدی که درستی سنجی می شود باید مقداری بین یک مقدار _min_ و _max_ ارائه شده داشته باشد. stringها، اعداد، و فایلها مشابه قانون `size` درستی سنجی می شوند.
 
 <a name="rule-boolean"></a>
 #### boolean
 
-The field under validation must be able to be cast as a boolean. Accepted input are `true`, `false`, `1`, `0`, `"1"` and `"0"`.
+فیلدی که درستی سنجی می شود باید امکان تبدیل نوع (cast) به بولین را داشته باشد. ورودیهای مورد قبول عبارتند از `true`، `false`، `1`، `0`، `"1"`، `"0"`.
 
 <a name="rule-confirmed"></a>
 #### confirmed
 
-The field under validation must have a matching field of `foo_confirmation`. For example, if the field under validation is `password`, a matching `password_confirmation` field must be present in the input.
+فیلدی که درستی سنجی می شود باید یک فیلد مشابه `foo_confirmation` داشته باشد. برای مثال، اگر فیلدی که درستی سنجی می شود `password` باشد، یک فیلد `password_confirmation` متناظر باید در ورودی موجود باشد.
 
 <a name="rule-date"></a>
 #### date
 
-The field under validation must be a valid date according to the `strtotime` PHP function.
+با توجه به تابع `strtotime` در PHP فیلد مورد درستی سنجی باید یک تاریخ معتبر باشد.
 
 <a name="rule-date-format"></a>
 #### date_format:_format_
 
-The field under validation must match the _format_ defined according to the `date_parse_from_format` PHP function.
+فیلد مورد درستی سنجی باید با _format_ ارائه شده همخوانی داشته باشد. این فرمت با توجه به تابع `date_parse_from_format` در PHP تعیین می شود.
 
 <a name="rule-different"></a>
 #### different:_field_
 
-The given _field_ must be different than the field under validation.
+_field_ داده شده باید با فیلدی که درستی سنجی می شود متفاوت باشد.
 
 <a name="rule-digits"></a>
 #### digits:_value_
 
-The field under validation must be _numeric_ and must have an exact length of _value_.
+فیلد مورد درستی سنجی باید "عددی" باشد و باید طولی دقیق به اندازه _value_ داشته باشد.
 
 <a name="rule-digits-between"></a>
 #### digits_between:_min_,_max_
 
-The field under validation must have a length between the given _min_ and _max_.
+فیلدی که درستی سنجی می شودباید طولی بین _min_ و _max_ داشته باشد.
 
 <a name="rule-email"></a>
 #### email
 
-The field under validation must be formatted as an e-mail address.
+فیلدی که درستی سنجی می شود باید قالب ایمیل داشته باشد.
 
 <a name="rule-exists"></a>
 #### exists:_table_,_column_
 
-The field under validation must exist on a given database table.
+فیلدی که درستی سنجی می شود باید در جدول ارائه شده موجود باشد.
 
-#### Basic Usage Of Exists Rule
+#### استفاده ابتدایی از قانون exists
 
 	'state' => 'exists:states'
 
-#### Specifying A Custom Column Name
+#### تعیین یک نام ستون اختصاصی
 
 	'state' => 'exists:states,abbreviation'
 
-You may also specify more conditions that will be added as "where" clauses to the query:
+میتوان شرطهای بیشتری که مانند عبارات "where" در پرس و جو عمل میکند مشخص نمود:
 
 	'email' => 'exists:staff,email,account_id,1'
 
-Passing `NULL` as a "where" clause value will add a check for a `NULL` database value:
+ارائه مقدار `NULL` به عنوان عبارت "where" یک مقدار پایگاه داده را با مقدار `NULL` مقایسه میکند:
 
 	'email' => 'exists:staff,email,deleted_at,NULL'
 
 <a name="rule-image"></a>
 #### image
 
-The file under validation must be an image (jpeg, png, bmp, gif, or svg)
+فایلی که درستی سنجی می شود باید عکس (jpeg ،png ،bmp، gif، svg) باشد.
 
 <a name="rule-in"></a>
 #### in:_foo_,_bar_,...
 
-The field under validation must be included in the given list of values.
+فیلدی که درستی سنجی می شود باید در لیست مقادیر ارائه شده موجود باشد.
 
 <a name="rule-integer"></a>
 #### integer
 
-The field under validation must have an integer value.
+فیلدی که درستی سنجی می شود باید مقدار integer داشته باشد.
 
 <a name="rule-ip"></a>
 #### ip
 
-The field under validation must be formatted as an IP address.
+فیلدی که درستی سنجی می شود، باید در قالب یک آدرس IP باشد.
 
 <a name="rule-max"></a>
 #### max:_value_
 
-The field under validation must be less than or equal to a maximum _value_. Strings, numerics, and files are evaluated in the same fashion as the [`size`](#rule-size) rule.
+فیلدی که درستی سنجی می شود باید از مقدار بیشینه _value_ کمتر یا با آن مساوی باشد. stringها، اعداد (numeric)، مشابه روش گفته شده در مورد قانون [`size`](#rule-size) درستی سنجی می شوند.
 
 <a name="rule-mimes"></a>
 #### mimes:_foo_,_bar_,...
 
-The file under validation must have a MIME type corresponding to one of the listed extensions.
+فایلی که درستی سنجی می شود باید نوع MIME متناسب با آنچه در لیست پسوندها آورده شده است داشته باشد.
 
-#### Basic Usage Of MIME Rule
+#### کاربرد ابتدایی قوانین MIME
 
 	'photo' => 'mimes:jpeg,bmp,png'
 
 <a name="rule-min"></a>
 #### min:_value_
 
-The field under validation must have a minimum _value_. Strings, numerics, and files are evaluated in the same fashion as the [`size`](#rule-size) rule.
+فیلدی که درستی سنجی می شود باید مقدار کمینه _value_ را دارا باشد. stringها، اعداد (numeric)، مشابه روش گفته شده در مورد قانون [`size`](#rule-size) درستی سنجی می شوند.
 
 <a name="rule-not-in"></a>
 #### not_in:_foo_,_bar_,...
 
-The field under validation must not be included in the given list of values.
+فیلدی که درستی سنجی می شود نباید در لیست مقادیر ارائه شده قرار داشته باشد.
 
 <a name="rule-numeric"></a>
 #### numeric
 
-The field under validation must have a numeric value.
+فیلدی که درستی سنجی می شود باید مقداری عددی داشته باشد.
 
 <a name="rule-regex"></a>
 #### regex:_pattern_
 
-The field under validation must match the given regular expression.
+فیلدی که درستی سنجی می شود باید با الگوی regular expression همخوانی داشته باشد.
 
-**Note:** When using the `regex` pattern, it may be necessary to specify rules in an array instead of using pipe delimiters, especially if the regular expression contains a pipe character.
+**نکته** هنگام استفاده از الگوی Regex باید به جای جدا کردن قوانین با استفاده از پایپ "|" باید آنها را در آرایهارائه دهید. این اتفاق زمانی که regular expression شامل پایپ باشد اهمییت پیدا میکند.
 
 <a name="rule-required"></a>
 #### required
 
-The field under validation must be present in the input data.
+فیلدی که درستی سنجی می شود باید در ورودیها موجود باشد.
 
 <a name="rule-required-if"></a>
 #### required_if:_field_,_value_,...
 
-The field under validation must be present if the _field_ is equal to any _value_.
+در صورتی که مقدار _field_ برابر با مقدار _any_ باشد، فیلدی که درستی سنجی می شود باید در ورودیها موجود باشد.
 
 <a name="rule-required-with"></a>
 #### required_with:_foo_,_bar_,...
 
-The field under validation must be present _only if_ any of the other specified fields are present.
+تنها در صورتی که هر یک از فیلدهای مشخص شده دیگر وجود داشته باشند، فیلدی که درستی سنجی می شود باید در ورودیها موجود باشد.
 
 <a name="rule-required-with-all"></a>
 #### required_with_all:_foo_,_bar_,...
 
-The field under validation must be present _only if_ all of the other specified fields are present.
+تنها در صورتی که تمامی فیلدهای مشخص شده دیگر وجود داشته باشند، فیلدی که درستی سنجی می شود باید در ورودیها موجود باشد.
 
 <a name="rule-required-without"></a>
 #### required_without:_foo_,_bar_,...
 
-The field under validation must be present _only when_ any of the other specified fields are not present.
+تنها در صورتی که هر یک از فیلدهای مشخص شده دیگر وجود نداشته باشند، فیلدی که درستی سنجی می شود باید در ورودیها موجود باشد.
 
 <a name="rule-required-without-all"></a>
 #### required_without_all:_foo_,_bar_,...
 
-The field under validation must be present _only when_ all of the other specified fields are not present.
+تنها در صورتی که تمامی فیلدهای مشخص شده دیگر وجود نداشته باشند، فیلدی که درستی سنجی می شود باید در ورودیها موجود باشد.
 
 <a name="rule-same"></a>
 #### same:_field_
 
-The given _field_ must match the field under validation.
+فیلد مشخص شده باید با فیلدی که در حال درستی سنجی است یکسان باشد.
 
 <a name="rule-size"></a>
 #### size:_value_
 
-The field under validation must have a size matching the given _value_. For string data, _value_ corresponds to the number of characters. For numeric data, _value_ corresponds to a given integer value. For files, _size_ corresponds to the file size in kilobytes.
+فیلدی که درستی سنجی می شود باید اندازه ای برابر با مقدار _value_ داده شده داشته باشد. برای داده های string این نکته به تعداد کاراکترها اشاره میکند. برای داده های عددی، مقدار _value_ به مقدار عدد صحیح داده شده اشاره میکند. برای فایلها _size_ به اندازه فایل برحسب کیلوبایت اشاره میکند.
 
 <a name="rule-string"></a>
 #### string
 
-The field under validation must be a string type.
+فیلدی که درستی سنجی می شود باید باید از جنس string باشد.
 
 <a name="rule-timezone"></a>
-#### timezone
+#### ناحیه زمانی - timezone
 
-The field under validation must be a valid timezone identifier according to the `timezone_identifiers_list` PHP function.
+فیلدی که درستی سنجی می شود باید براساس تابع `timezone_identifiers_list` در PHP شناسه ناحیه زمانی درستی باشد.
 
 <a name="rule-unique"></a>
 #### unique:_table_,_column_,_except_,_idColumn_
 
-The field under validation must be unique on a given database table. If the `column` option is not specified, the field name will be used.
+فیلدی که درستی سنجی می شود باید در جدول پایگاه داده ارائه شده یکتا باشد. در صورتی که گزینه `column` مشخص نشده باشد، نام فلید استفاده می شود.
 
-Occasionally, you may need to set a custom connection for database queries made by the Validator. As seen above, setting `unique:users` as a validation rule will use the default database connection to query the database. To override this, do the following:
+گاهی نیاز دارید برای پرس و جوهای انجام شده توسط validator یک اتصال اختصاصی تعریف کنید. همانطور که پیش از این نمایش داده شد، قراردادن `unique:users` به عنوان یک قانون درستی سنجی، برای پرس و جوی پایگاه داده از اتصال پیش رض استفاده میکند. برای استفاده از اتصال پایگاه داده اختصاصی، از روش زیر استفاده نمایید:
 
 	$verifier = App::make('validation.presence');
 
@@ -594,75 +594,75 @@ Occasionally, you may need to set a custom connection for database queries made 
 
 	$validator->setPresenceVerifier($verifier);
 
-#### Basic Usage Of Unique Rule
+#### استفاده ابتدایی از قوانین یکتایی
 
 	'email' => 'unique:users'
 
-#### Specifying A Custom Column Name
+#### تعیین یک نام اختصاصی برای ستون
 
 	'email' => 'unique:users,email_address'
 
-#### Forcing A Unique Rule To Ignore A Given ID
+#### اعمال قانون یکتایی بر تمام موارد جز یک ID مشخص شده
 
 	'email' => 'unique:users,email_address,10'
 
-#### Adding Additional Where Clauses
+#### افزودن شرطهای بیشتر
 
-You may also specify more conditions that will be added as "where" clauses to the query:
+میتوانید شرطهای بیشتری را بیافزایید که به عنوان عبارات "where" به پرس و جو افزوده می شوند.
 
 	'email' => 'unique:users,email_address,NULL,id,account_id,1'
 
-In the rule above, only rows with an `account_id` of `1` would be included in the unique check.
+در قانون بالا، تنها ردیفهایی با مقدار `account_id` برابر با `1` در بررسی یکتایی قرار خواهند گرفت.
 
 <a name="rule-url"></a>
 #### url
 
-The field under validation must be formatted as an URL.
+فیلدی که درستی سنجی می شود باید با قالب URL باشد.
 
 > **Note:** This function uses PHP's `filter_var` method.
 
 <a name="conditionally-adding-rules"></a>
-## Conditionally Adding Rules
+## افزودن مشروط قوانین
 
-In some situations, you may wish to run validation checks against a field **only** if that field is present in the input array. To quickly accomplish this, add the `sometimes` rule to your rule list:
+گاهی، میخواهید درستی سنجی **تنها** در صورتی انجام شود که فیلد مورد نظر درآرایه ورودی ها موجود باشد. برای رسیدن به این هدف، یک قانون `sometimes` به لیست قوانین بیافزایید:
 
 	$v = Validator::make($data, [
 		'email' => 'sometimes|required|email',
 	]);
 
-In the example above, the `email` field will only be validated if it is present in the `$data` array.
+در مثال بالا، فیلد `email` تنها در صورتی که در آرایه `$data` وجود داشته باشد، درستی سنجی می شود.
 
-#### Complex Conditional Validation
+#### درستی سنجی شرطی پیچیده
 
-Sometimes you may wish to require a given field only if another field has a greater value than 100. Or you may need two fields to have a given value only when another field is present. Adding these validation rules doesn't have to be a pain. First, create a `Validator` instance with your _static rules_ that never change:
+گاهی وجود یک فیلد در صورتی الزامیست که مقدار فیلدی دیگر از 100 بزرگتر باشد. یا مقدار دو فیلد در صورتی که فیلدی مشخص وجود داشته باشد، باید با مقداری برابری کند. افزودن این قوانین درستی سنجی نباید دردسر زیادی ایجاد کند. ابتدا یک نمونه از `Validator` با قوانین ثابتی که هیچگاه تغییر نمیکنند بسازید:
 
 	$v = Validator::make($data, [
 		'email' => 'required|email',
 		'games' => 'required|numeric',
 	]);
 
-Let's assume our web application is for game collectors. If a game collector registers with our application and they own more than 100 games, we want them to explain why they own so many games. For example, perhaps they run a game re-sell shop, or maybe they just enjoy collecting. To conditionally add this requirement, we can use the `sometimes` method on the `Validator` instance.
+فرض کنید نرم افزار وب ما برای کلکسیونرهای بازی باشد. در صورتی که یک کلکسیونر در سرویس ما ثبت نام نماید و بیش از 100 بازی داشته باشد، از آنها میخواهیم دلیل جمع آوری این تعداد بازی را توضیح دهد. برای مثال، شاید یک فروشگاه فروش بازی را اداره می کنند، یا تنها از جمع آوری بازیها لذت میبرند. برای افزودن مشروط این نیازمندیها، میتوانیم از متد `sometimes` بر روی نمونه کلاس `Validator` استفاده کنیم:
 
 	$v->sometimes('reason', 'required|max:500', function($input)
 	{
 		return $input->games >= 100;
 	});
 
-The first argument passed to the `sometimes` method is the name of the field we are conditionally validating. The second argument is the rules we want to add. If the `Closure` passed as the third argument returns `true`, the rules will be added. This method makes it a breeze to build complex conditional validations. You may even add conditional validations for several fields at once:
+آرگومان اولی که به متد `sometimes` فرستاده می شود نام فیلدی است که درستی آن مشروط سنجیده می شود. آرگومان دوم قوانینی هستند که میخواهیم بیافزاییم. اگر `Closure` فرستاده شده به عنوان آرگومان سوم، مقدار خروجی `true` داشته باشد، قوانین افزوده می شوند. این متد ساخت قوانین درستی سنجی شرطی پیچیده را بسیار ساده میکند. حتی میتوانید قوانین شرظی را برای چندین فیلد همزمان بیافزایید:
 
 	$v->sometimes(['reason', 'cost'], 'required', function($input)
 	{
 		return $input->games >= 100;
 	});
 
-> **Note:** The `$input` parameter passed to your `Closure` will be an instance of `Illuminate\Support\Fluent` and may be used as an object to access your input and files.
+> **نکته:** پارامتر ورودی `$input` که به `Closure` میفرستید، نمونه ای از کلاس `Illuminate\Support\Fluent` است و به عنوان یک شی برای دسترسی به ورودی و فایلها استفاده می شود.
 
 <a name="custom-error-messages"></a>
-## Custom Error Messages
+## پیامهای خطای اختصاصی شده
 
-If needed, you may use custom error messages for validation instead of the defaults. There are several ways to specify custom messages.
+در صورت نیاز میتوانید به جای پیامهای خطای پیش فرض از پیامهای خطای اختصاصی شده استفاده نمایید. راههای بسیاری برای مشخص کردن پیامهای اختصاصی شده وجود دارد.
 
-#### Passing Custom Messages Into Validator
+#### فرستادن پیامهای اختصاصی به Validator
 
 	$messages = [
 		'required' => 'The :attribute field is required.',
@@ -670,9 +670,9 @@ If needed, you may use custom error messages for validation instead of the defau
 
 	$validator = Validator::make($input, $rules, $messages);
 
-> *Note:* The `:attribute` place-holder will be replaced by the actual name of the field under validation. You may also utilize other place-holders in validation messages.
+> **نکته:** فضانگهدار `:attribute` با نام فیلدی که درستی سنجی بر روی آن انجام میشود جایگزین خواهد شد. شما نیزمیتوانید از فضانگهدارهای دیگر در پیامهای درستی سنجی استفاده کنید:
 
-#### Other Validation Place-Holders
+#### فضانگهدارهای دیگر درستی سنجی
 
 	$messages = [
 		'same'    => 'The :attribute and :other must match.',
@@ -681,18 +681,18 @@ If needed, you may use custom error messages for validation instead of the defau
 		'in'      => 'The :attribute must be one of the following types: :values',
 	];
 
-#### Specifying A Custom Message For A Given Attribute
+#### ارائه یک پیام اختصاصی برای یک متغیر
 
-Sometimes you may wish to specify a custom error messages only for a specific field:
+گاهی میخواهید تنها برای یک فیلد پیام خطای اختصاصی ایجاد کنید:
 
 	$messages = [
 		'email.required' => 'We need to know your e-mail address!',
 	];
 
 <a name="localization"></a>
-#### Specifying Custom Messages In Language Files
+#### ارائه پیام خطای اختصاصی در فایل زبان
 
-In some cases, you may wish to specify your custom messages in a language file instead of passing them directly to the `Validator`. To do so, add your messages to `custom` array in the `resources/lang/xx/validation.php` language file.
+برخی مواقع به جای فرستادن پیامهای اختصاصی به `Validator` میخواهید پیام خطا را در یک فایل پیامهای زبان ارائه کنید. برای این کار، پیامها را به آرایه `custom` در فایل زبان `resources/lang/xx/validation.php` بیافزایید.
 
 	'custom' => [
 		'email' => [
@@ -701,29 +701,28 @@ In some cases, you may wish to specify your custom messages in a language file i
 	],
 
 <a name="custom-validation-rules"></a>
-## Custom Validation Rules
+## قوانین درستی سنجی اختصاصی
 
-#### Registering A Custom Validation Rule
+#### ثبت یک قانون درستی سنجی اختصاصی
 
-Laravel provides a variety of helpful validation rules; however, you may wish to specify some of your own. One method of registering custom validation rules is using the `Validator::extend` method:
+لاراول قوانین درستی سنجی کاربردی دارد؛ هرچند، شاید نیاز داشته باشید قوانین خود را تعریف کنید. یک راه برای ثبت و معرفی قوانین درستی سنجی استفاده از متد `Validator::extend` میباشد:
 
 	Validator::extend('foo', function($attribute, $value, $parameters)
 	{
 		return $value == 'foo';
 	});
 
-The custom validator Closure receives three arguments: the name of the `$attribute` being validated, the `$value` of the attribute, and an array of `$parameters` passed to the rule.
+کلوژر اختصاصی validator سه آرگومان دریافت میکند: نام `$attribute` که درستی آن بررسی می شود، مقدار `$value`، و آرایه ای از `$parameters` که به قانون فرستاده می شود.
 
-You may also pass a class and method to the `extend` method instead of a Closure:
+میتوانید به جای فرستادن کلوژر به متد `extend`، کلاس و متد بفرستید:
 
 	Validator::extend('foo', 'FooValidator@validate');
 
-Note that you will also need to define an error message for your custom rules. You can do so either using an inline custom message array or by adding an entry in the validation language file.
+توجه داشته باشید که باید برای قوانین اختصاص یک پیام خطا هم تعریف نمایید. این کار را همزمان با تعریف قانون از طریق ارائه آرایه ی پیامها و یا با افزودن یک پیام به فایل زبان انجام دهید.
 
-#### Extending The Validator Class
+#### اکستند کلاس Validator
 
-Instead of using Closure callbacks to extend the Validator, you may also extend the Validator class itself. To do so, write a Validator class that extends `Illuminate\Validation\Validator`. You may add validation methods to the class by prefixing them with `validate`:
-
+به جای استفاده از کلوژرهای کلابک برای توسعه Validator، میتوانید از خود کلاس Validator را اکستند کنید. برای این کار، یک کلاس Validator که کلاس `Illuminate\Validation\Validator` را اکستند میکند ایجاد کنید. با افزودن پیشوند `validate` به متدها میتوانید متدهای درستی سنجی بسازید:
 	<?php
 
 	class CustomValidator extends \Illuminate\Validation\Validator {
@@ -735,23 +734,23 @@ Instead of using Closure callbacks to extend the Validator, you may also extend 
 
 	}
 
-#### Registering A Custom Validator Resolver
+#### ثبت معرفی کننده Validator اختصاصی
 
-Next, you need to register your custom Validator extension:
+در قدم بعد باید Validator اختصاصی ایجاد شده را ثبت و معرفی کنید:
 
 	Validator::resolver(function($translator, $data, $rules, $messages)
 	{
 		return new CustomValidator($translator, $data, $rules, $messages);
 	});
 
-When creating a custom validation rule, you may sometimes need to define custom place-holder replacements for error messages. You may do so by creating a custom Validator as described above, and adding a `replaceXXX` function to the validator.
+وقتی یک قانون درستی سنجی اختصاصی میسازید، میتوانید برای پیامهای خطا فضانگهدارهایی قرار دهید. این کار را با افزودن یک تابع `replaceXXX` به validator انجام دهید.
 
 	protected function replaceFoo($message, $attribute, $rule, $parameters)
 	{
 		return str_replace(':foo', $parameters[0], $message);
 	}
-
-If you would like to add a custom message "replacer" without extending the `Validator` class, you may use the `Validator::replacer` method:
+	
+اگر میخواهید بدون اکستند کردن کلاس `Validator` یک جایگزین گننده پیام اختصاصی ایجاد کنید، میتوانید از متد `Validator::replacer` استفاده کنید:
 
 	Validator::replacer('rule', function($message, $attribute, $rule, $parameters)
 	{

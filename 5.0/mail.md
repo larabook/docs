@@ -1,66 +1,66 @@
-# Mail
+# ایمیل (Mail)
 
-- [Configuration](#configuration)
-- [Basic Usage](#basic-usage)
-- [Embedding Inline Attachments](#embedding-inline-attachments)
-- [Queueing Mail](#queueing-mail)
-- [Mail & Local Development](#mail-and-local-development)
+- [تنظیمات](#configuration)
+- [کاربرد ابتدایی](#basic-usage)
+- [افزودن پیوست درلحظه - Inline Attachment](#embedding-inline-attachments)
+- [صف کردن ایمیل ها](#queueing-mail)
+- [ایمیل و توسعه محلی](#mail-and-local-development)
 
 <a name="configuration"></a>
-## Configuration
+## تنظیمات
 
-Laravel provides a clean, simple API over the popular [SwiftMailer](http://swiftmailer.org) library. The mail configuration file is `config/mail.php`, and contains options allowing you to change your SMTP host, port, and credentials, as well as set a global `from` address for all messages delivered by the library. You may use any SMTP server you wish. If you wish to use the PHP `mail` function to send mail, you may change the `driver` to `mail` in the configuration file. A `sendmail` driver is also available.
+لاراول یک API ساده و خوش ساخت برپایه کتابخانه معروف [SwiftMailer](http://swiftmailer.org) ارائه می نماید. فایل تنظیمات ایمیل `config/mail.php` است، و گزینه هایی برای تنظیم میزبان SMTP، پورت، و اطلاعات دسترسی و همینطور یک متغیر عمومی `from` برای تمامی ایمیل های فرستاده شده توسط این کتابخانه در خود دارد. شما میتوانید از هر سرور SMTP که بخواهید استفاده کنید. اگر میخواهید از تابع `mail` در PHP برای فرستادن ایمیل استفاده کنید، باید مقدار متغیر `driver` درفایل تنظیمات را به `mail` تغییر دهید. یک درایور `sendmail` هم برای استفاده وجود دارد.
 
-### API Drivers
+### درایورهای API
 
-Laravel also includes drivers for the Mailgun and Mandrill HTTP APIs. These APIs are often simpler and quicker than the SMTP servers. Both of these drivers require that the Guzzle 5 HTTP library be installed into your application. You can add Guzzle 5 to your project by adding the following line to your `composer.json` file:
+لاراول همچنین درایورهایی برای APIهای HTTP با نامهای Mailgun و Mandrill ارائه می دهد. این APIها اغلب از سرورهای SMTP ساده تر و سریعتر هستند. هردوی این درایورها برای کار نیاز به نصب یک کتابخانه HTTP با نام Guzzle 5 دارند. با افزودن خط زیر به فایل `composer.json` میتوانید کتابخانه Guzzle 5 را به پروژه خود بیافزایید:
 
 	"guzzlehttp/guzzle": "~5.0"
 
-#### Mailgun Driver
+#### درایور Mailgun
 
-To use the Mailgun driver, set the `driver` option to `mailgun` in your `config/mail.php` configuration file. Next, create an `config/services.php` configuration file if one does not already exist for your project. Verify that it contains the following options:
+برای استفاده از درایور Mailgun در فایل تنظیمات `config/mail.php` مقدار متغیر `driver` را با `mailgun` مقداردهی کنید. در قدم بعد اگر فایل تنظیمات `config/services.php` وجود ندارد آن را ایجاد کنید. از وجود متغیرهای زیر در آن مطمئن شوید:
 
 	'mailgun' => [
 		'domain' => 'your-mailgun-domain',
 		'secret' => 'your-mailgun-key',
 	],
 
-#### Mandrill Driver
+#### درایور Mandrill
 
-To use the Mandrill driver, set the `driver` option to `mandrill` in your `config/mail.php` configuration file. Next, create an `config/services.php` configuration file if one does not already exist for your project. Verify that it contains the following options:
+برای استفاده از درایور Mandrill در فایل تنظیمات `config/mail.php` مقدار متغیر `driver` را با `mandrill` مقداردهی کنید. در قدم بعد اگر فایل تنظیمات `config/services.php` وجود ندارد آن را ایجاد کنید. از وجود متغیرهای زیر در آن مطمئن شوید:
 
 	'mandrill' => [
 		'secret' => 'your-mandrill-key',
 	],
 
-### Log Driver
+### درایور لاگ
 
-If the `driver` option of your `config/mail.php` configuration file is set to `log`, all e-mails will be written to your log files, and will not actually be sent to any of the recipients. This is primarily useful for quick, local debugging and content verification.
+اگر مقدار متغیر `driver` در فایل تنظیمات `config/mail.php` با `log` مقداردهی شده باشد، تمامی ایمیل ها در فایلهای لاگ نوشته خواهند شد، و به هیچ یک از مخاطبین فرستاده نمی شوند. این کار برای عیب یابی و بررسی محتوای محلی و سریع مناسب است.
 
 <a name="basic-usage"></a>
-## Basic Usage
+## کاربرد ابتدایی
 
-The `Mail::send` method may be used to send an e-mail message:
+متد `Mail::send` میتواند برای فرستادن ایمیل استفاده شود:
 
 	Mail::send('emails.welcome', ['key' => 'value'], function($message)
 	{
 		$message->to('foo@example.com', 'John Smith')->subject('Welcome!');
 	});
 
-The first argument passed to the `send` method is the name of the view that should be used as the e-mail body. The second is the data to be passed to the view, often as an associative array where the data items are available to the view by `$key`. The third is a Closure allowing you to specify various options on the e-mail message.
+آرگومان اول فرستاده شده به متد `send` نام view استفاده شده به عنوان بدنه ایمیل است. آرگومان دوم داده ای است که باید به view فرستاده شود، و اغلب به عنوان یک آرایه ارائه می شود. داده ها از طریق متغیر `$key` در view قابل دسترس خواهند بود. آرگومان سوم کلوژری است که به شما امکان مشخص کردن گزینه های مختلف در مورد پیام ایمیل را میدهد.
 
-> **Note:** A `$message` variable is always passed to e-mail views, and allows the inline embedding of attachments. So, it is best to avoid passing a `message` variable in your view payload.
+> **نکته:** همیشه یک متغیر `$message` به view مربوط به ایمیل فرستاده می شود و امکان افزودن پیوست در محل را به وجود می آورد. بنابراین بهتر است از فرستادن متغیر `message` خودداری کنید.
 
-You may also specify a plain text view to use in addition to an HTML view:
+همینطور میتوانید علاوه بر view در قالب HTML، از view با متن ساده استفاده کنید:
 
 	Mail::send(['html.view', 'text.view'], $data, $callback);
 
-Or, you may specify only one type of view using the `html` or `text` keys:
+یا میتوانید با استفاده از کلیدهای `html` یا `text` تنها یک نوع view مشخص نمایید:
 
 	Mail::send(['text' => 'view'], $data, $callback);
 
-You may specify other options on the e-mail message such as any carbon copies or attachments as well:
+میتوانید گزینه های دیگری مانند رونوشت، یا پیوست هم برای ایمیل خود مشخص نمایید:
 
 	Mail::send('emails.welcome', $data, function($message)
 	{
@@ -71,11 +71,11 @@ You may specify other options on the e-mail message such as any carbon copies or
 		$message->attach($pathToFile);
 	});
 
-When attaching files to a message, you may also specify a MIME type and / or a display name:
+هنگامی که فایلی را به پیام پیوست میکنید، میتوانید نوع MIME و/یا نام نمایش داده شده را هم مشخص نمایید:
 
 	$message->attach($pathToFile, ['as' => $display, 'mime' => $mime]);
 
-If you just need to e-mail a simple string instead of an entire view, use the `raw` method:
+اگر میخواهید به جای یک ایمیل کامل یک string ساده بفرستید، میتوانید از متد `raw` استفاده کنید:
 
 	Mail::raw('Text to e-mail', function($message)
 	{
@@ -84,14 +84,14 @@ If you just need to e-mail a simple string instead of an entire view, use the `r
 		$message->to('foo@example.com')->cc('bar@example.com');
 	});
 
-> **Note:** The message instance passed to a `Mail::send` Closure extends the SwiftMailer message class, allowing you to call any method on that class to build your e-mail messages.
+> **نکته:** نمونه پیام فرستاده شده به کلوژر `Mail::send` کلاس SwiftMailer را اکستند میکند. این موضوع امکان فراخوانی هر متدی بر روی آن کلاس برای ساخت پیام ایمیلتان ایجاد میکند.
 
 <a name="embedding-inline-attachments"></a>
-## Embedding Inline Attachments
+## پیوست درمحل - Inline Attachment
 
-Embedding inline images into your e-mails is typically cumbersome; however, Laravel provides a convenient way to attach images to your e-mails and retrieving the appropriate CID.
+پیوست عکسها به بدنه ایمیلها کار دشواری است؛ هرچند، لاراول روشی ساده برای پیوست تصویر به ایمیل و بازیابی CID مناسب ارائه مینماید.
 
-#### Embedding An Image In An E-Mail View
+#### قراردادن تصویر در View مربوط به ایمیل
 
 	<body>
 		Here is an image:
@@ -99,7 +99,7 @@ Embedding inline images into your e-mails is typically cumbersome; however, Lara
 		<img src="<?php echo $message->embed($pathToFile); ?>">
 	</body>
 
-#### Embedding Raw Data In An E-Mail View
+#### قراردادن داده خام در View ایمیل
 
 	<body>
 		Here is an image from raw data:
@@ -107,28 +107,28 @@ Embedding inline images into your e-mails is typically cumbersome; however, Lara
 		<img src="<?php echo $message->embedData($data, $name); ?>">
 	</body>
 
-Note that the `$message` variable is always passed to e-mail views by the `Mail` facade.
+توجه داشته باشید که متغیر `$message` همیشه با استفاده از فاساد `Mail` به view مربوط به ایمیل فرستاده می شود.
 
 <a name="queueing-mail"></a>
-## Queueing Mail
+## صف بندی ایمیلها
 
-#### Queueing A Mail Message
+#### قراردادن یک ایمیل در صف
 
-Since sending e-mail messages can drastically lengthen the response time of your application, many developers choose to queue e-mail messages for background sending. Laravel makes this easy using its built-in [unified queue API](/docs/{{version}}/queues). To queue a mail message, simply use the `queue` method on the `Mail` facade:
+از آنجاکه فرستادن ایمیل میتواند به شدت زمان پاسخ نرم افزار شما را افزایش دهد، بسیاری از برنامه نویسان ترجیح میدهند ایمیلها را برای اینکه در زمان مناسب و پشت صحنه فرستاده شوند، در صف قرار دهند. لاراول این کار را با استفاده از [API یکتای صف](/docs/%7B%7Bversion%7D%7D/queues) ساده میکند. برای قراردادن ایمیل در صف، به سادگی متد `queue` از فاساد `Mail` را استفاده کنید:
 
 	Mail::queue('emails.welcome', $data, function($message)
 	{
 		$message->to('foo@example.com', 'John Smith')->subject('Welcome!');
 	});
 
-You may also specify the number of seconds you wish to delay the sending of the mail message using the `later` method:
+همچنین میتوانید با استفاده از متد `later` مدت زمانی که میخواهید فرستادن ایمیل را به تاخیر بیندازید مشخص کنید:
 
 	Mail::later(5, 'emails.welcome', $data, function($message)
 	{
 		$message->to('foo@example.com', 'John Smith')->subject('Welcome!');
 	});
 
-If you wish to specify a specific queue or "tube" on which to push the message, you may do so using the `queueOn` and `laterOn` methods:
+اگر میخواهید یک صف مشخص را برای افزودن پیام مشخص کنید، میتوانید از متدهای `queueOn` و `laterOn` استفاده کنید:
 
 	Mail::queueOn('queue-name', 'emails.welcome', $data, function($message)
 	{
@@ -136,8 +136,8 @@ If you wish to specify a specific queue or "tube" on which to push the message, 
 	});
 
 <a name="mail-and-local-development"></a>
-## Mail & Local Development
+## Mail و توسعه محلی
 
-When developing an application that sends e-mail, it's usually desirable to disable the sending of messages from your local or development environment. To do so, you may either call the `Mail::pretend` method, or set the `pretend` option in the `config/mail.php` configuration file to `true`. When the mailer is in `pretend` mode, messages will be written to your application's log files instead of being sent to the recipient.
+هنگامی که در حال توسعه نرم افزاری با امکان ارسال ایمیل هستید، غیرفعال کردن فرستادن ایمیل از ماشین محلی شما میتواند مفید باشد. برای انجام این کار، میتوانید متد `Mail::pretend` را استفاده کنید یا مقدار گزینه `pretend` را در فایل `config/mail.php` را با `true` مقداردهی کنید. هنگامی که فرستنده ایمیل در حالت `pretend` باشد، پیام به جای فرستاده شدن در فایلهای لاگ نرم افزار نوشته میشود.
 
-If you would like to actually view the test e-mails, consider using a service like [MailTrap](https://mailtrap.io).
+اگر میخواهید واقعا ایملیهای تستی را ببینید، از سرویسی مانند [Mailtrap](https://mailtrap.io) استفاده کنید.
