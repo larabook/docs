@@ -1,8 +1,8 @@
-# Application Structure
+# ساختار برنامه
 
-- [Introduction](#introduction)
-- [The Root Directory](#the-root-directory)
-- [The App Directory](#the-app-directory)
+- [آشنایی](#introduction)
+- [دایرمتوری Root](#the-root-directory)
+- [دایرکتوری App](#the-app-directory)
 - [Namespacing Your Application](#namespacing-your-application)
 
 <a name="introduction"></a>
