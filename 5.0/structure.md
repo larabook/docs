@@ -15,8 +15,9 @@
 <a name="the-root-directory"></a>
 ## Root  دایرمتوری 
 
- زمان نصب یه لاراول جدید , دایرکتوری روت شامل فولدرهای متعددی است : 
+ زمان نصب یک لاراول جدید , دایرکتوری روت شامل فولدرهای متعددی است : 
 
+<b>test</b>
 The `app` directory, as you might expect, contains the core code of your application. We'll explore this folder in more detail soon.
 
 The `bootstrap` folder contains a few files that bootstrap the framework and configure autoloading.
