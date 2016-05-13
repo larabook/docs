@@ -39,9 +39,9 @@
 فولدر vendor شامل  تمام پکیج های مورد نیاز می باشد .
 
 <a name="the-app-directory"></a>
-## The App Directory
+## App دایرکتوری 
 
-The "meat" of your application lives in the `app` directory. By default, this directory is namespaced under `App` and is autoloaded by Composer using the [PSR-4 autoloading standard](http://www.php-fig.org/psr/psr-4/). **You may change this namespace using the `app:name` Artisan command**.
+قسمت اصلی برنامه ی شما در فولدر app می باشد و این فولدر تحت فضای نامی App است و به صورت خودکار با به وسیله ی کامپوزر و استاندارد  [PSR-4 autoloading standard](http://www.php-fig.org/psr/psr-4/) بارگزاری می شود .شما می توانید با فرمان آرتیسان app:name این فضای نامی را به دلخواه خود عوض نمایید.
 
 The `app` directory ships with a variety of additional directories such as `Console`, `Http`, and `Providers`. Think of the `Console` and `Http` directories as providing an API into the "core" of your application. The HTTP protocol and CLI are both mechanisms to interact with your application, but do not actually contain application logic. In other words, they are simply two ways of issuing commands to your application. The `Console` directory contains all of your Artisan commands, while the `Http` directory contains your controllers, filters, and requests.
 
