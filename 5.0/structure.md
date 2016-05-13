@@ -17,11 +17,14 @@
 
  زمان نصب یک لاراول جدید , دایرکتوری روت شامل فولدرهای متعددی است : 
 
-<b>test</b>
-The `app` directory, as you might expect, contains the core code of your application. We'll explore this folder in more detail soon.
 
-The `bootstrap` folder contains a few files that bootstrap the framework and configure autoloading.
-
+<p style="directory:rtl" >همانطور که انتظار می رود , دایرکتوری root شامل کدهای هسته ی برنامه ی شما می باشد .  ما به زودی این فولدر و جزییات آن را شرح می دهیم . </p>
+<p style="directory:rtl" >
+فولدر bootstrap  شامل فایل های اندکی به منظور راه ندازی فریم ورک و پیکربندی های خودکار می باشد .
+</p>
+<p style="directory:rtl" >
+پوشه ی config همانطور که از نام آن می توان حدس زد شامل فایل های تنظیمات و پیکربندی های برنامه ی شما می باشد .
+</p>
 The `config` directory, as the name implies, contains all of your application's configuration files.
 
 The `database` folder contains your database migration and seeds.
