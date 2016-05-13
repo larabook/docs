@@ -1,26 +1,26 @@
 # ساختار برنامه
 
 - [آشنایی](#introduction)
-- [Root  دایرمتوری ](#the-root-directory)
+- [Root  دایرکتوری ](#the-root-directory)
 - [App دایرکتوری ](#the-app-directory)
 - [Namespacing Your Application](#namespacing-your-application)
 
 <a name="introduction"></a>
 ## آشنایی
 
-به صورت پیش فرض ساختار دایرکتوری ها در فریم ورک لاراول طوری در نظر گرفته شده است که نطقه ی شروع مناسبی برای برنامه های کوچک و بزرگ باشد . البته شما برای سازماندهی کردن دایرکتوری های برنامه اتون کاملا آزاد هستن  و تقریبا می توان گفت هیچ محدودیتی از طرف لاراول برای محل قرار گیری  کلاس ها وجود ندارد و کامپوزر می تواند آنها را بارگزاری نماید .
+به صورت پیش فرض ساختار دایرکتوری ها در فریم ورک لاراول طوری در نظر گرفته شده است که نطقه ی شروع مناسبی برای برنامه های کوچک و بزرگ باشد . البته شما برای سازماندهی کردن دایرکتوری های برنامه ی خودتان ,کاملا آزاد هستین و تقریبا می توان گفت هیچ محدودیتی از طرف لاراول برای محل قرار گیری کلاس ها وجود ندارد و کامپوزر می تواند آنها را بارگزاری نماید .
 
 
 
 <a name="the-root-directory"></a>
-## Root  دایرمتوری 
+## Root  دایرکتوری 
 
  زمان نصب یک لاراول جدید , دایرکتوری روت شامل فولدرهای متعددی است : 
 
 
 همانطور که انتظار می رود , دایرکتوری root شامل کدهای هسته ی برنامه ی شما می باشد .  ما به زودی این فولدر و جزییات آن را شرح می دهیم . 
 
-فولدر bootstrap  شامل فایل های اندکی به منظور راه ندازی فریم ورک و پیکربندی های خودکار می باشد .
+فولدر bootstrap  شامل فایل های اندکی به منظور راه اندازی فریم ورک و پیکربندی های خودکار می باشد .
 
 
 فولدر  config همانطور که از نام آن می توان حدس زد شامل فایل های تنظیمات و پیکربندی های برنامه ی شما می باشد .
@@ -32,7 +32,7 @@
 
 فولدر resources شامل تمام view ها , فایل های مربوط به زبان و همچنین فایل هایی مانند LESS, SASS, CoffeeScript می باشد .
 
-فولدر resources شامل تمام فایل های کامپایل شده قالب Blade  , سشن ها ,کش ها و دیگر فایل های تولید شده به وسلیه فریم ورک می باشد .
+فولدر storage شامل تمام فایل های کامپایل شده قالب Blade  , سشن ها ,کش ها و دیگر فایل های تولید شده به وسلیه فریم ورک می باشد .
 
 فولدر test شامل فایل های تست خودکار می باشد.
 
@@ -41,7 +41,7 @@
 <a name="the-app-directory"></a>
 ## App دایرکتوری 
 
-قسمت اصلی برنامه ی شما در فولدر app می باشد و این فولدر تحت فضای نامی App است و به صورت خودکار با به وسیله ی کامپوزر و استاندارد  [PSR-4 autoloading standard](http://www.php-fig.org/psr/psr-4/) بارگزاری می شود .شما می توانید با فرمان آرتیسان app:name این فضای نامی را به دلخواه خود عوض نمایید.
+قسمت اصلی برنامه ی شما در فولدر app می باشد و این فولدر تحت فضای نامی App است و به صورت خودکار به وسیله ی کامپوزر و استاندارد  [PSR-4 autoloading standard](http://www.php-fig.org/psr/psr-4/) بارگزاری می شود .شما می توانید با فرمان آرتیسان app:name این فضای نامی را به دلخواه خود عوض نمایید.
 
 The `app` directory ships with a variety of additional directories such as `Console`, `Http`, and `Providers`. Think of the `Console` and `Http` directories as providing an API into the "core" of your application. The HTTP protocol and CLI are both mechanisms to interact with your application, but do not actually contain application logic. In other words, they are simply two ways of issuing commands to your application. The `Console` directory contains all of your Artisan commands, while the `Http` directory contains your controllers, filters, and requests.
 
