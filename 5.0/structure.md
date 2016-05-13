@@ -34,9 +34,9 @@
 
 فولدر resources شامل تمام فایل های کامپایل شده قالب Blade  , سشن ها ,کش ها و دیگر فایل های تولید شده به وسلیه فریم ورک می باشد .
 
-The `tests` directory contains your automated tests.
+فولدر test شامل فایل های تست خودکار می باشد.
 
-The `vendor` directory contains your Composer dependencies.
+فولدر vendor شامل  تمام پکیج های مورد نیاز می باشد .
 
 <a name="the-app-directory"></a>
 ## The App Directory
