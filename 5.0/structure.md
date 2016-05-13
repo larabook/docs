@@ -2,19 +2,20 @@
 
 - [آشنایی](#introduction)
 - [Root  دایرمتوری ](#the-root-directory)
-- [App] دایرکتوری (#the-app-directory)
+- [App دایرکتوری ](#the-app-directory)
 - [Namespacing Your Application](#namespacing-your-application)
 
 <a name="introduction"></a>
 ## آشنایی
 
-به صورت پیش فرض ساختار دایرکتوری ها در فریم ورک لاراول طوری در نظر گرفته شده است که نقشه ی شروع مناسبی برای برنامه های کوچک و بزرگ باشد . البته شما برای سازماندهی کردن دایرکتوری های برنامه اتون کاملا آزاد هستن  و تقریبا می توان گفت هیچ محدودیتی از طرف لاراول برای محل قرار گیری  کلاس ها وجود ندارد و Composer  می تواند آنها را بارگزاری نماید .
+به صورت پیش فرض ساختار دایرکتوری ها در فریم ورک لاراول طوری در نظر گرفته شده است که نطقه ی شروع مناسبی برای برنامه های کوچک و بزرگ باشد . البته شما برای سازماندهی کردن دایرکتوری های برنامه اتون کاملا آزاد هستن  و تقریبا می توان گفت هیچ محدودیتی از طرف لاراول برای محل قرار گیری  کلاس ها وجود ندارد و کامپوزر می تواند آنها را بارگزاری نماید .
+
 
 
 <a name="the-root-directory"></a>
-## The Root Directory
+## Root  دایرمتوری 
 
-The root directory of a fresh Laravel installation contains a variety of folders:
+ زمان نصب یه لاراول جدید , دایرکتوری روت شامل فولدرهای متعددی است : 
 
 The `app` directory, as you might expect, contains the core code of your application. We'll explore this folder in more detail soon.
 
