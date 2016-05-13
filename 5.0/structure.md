@@ -1,14 +1,15 @@
 # ساختار برنامه
 
 - [آشنایی](#introduction)
-- [دایرمتوری Root](#the-root-directory)
-- [دایرکتوری App](#the-app-directory)
+- [Root  دایرمتوری ](#the-root-directory)
+- [App] دایرکتوری (#the-app-directory)
 - [Namespacing Your Application](#namespacing-your-application)
 
 <a name="introduction"></a>
-## Introduction
+## آشنایی
 
-The default Laravel application structure is intended to provide a great starting point for both large and small applications. Of course, you are free to organize your application however you like. Laravel imposes almost no restrictions on where any given class is located - as long as Composer can autoload the class.
+به صورت پیش فرض ساختار دایرکتوری ها در فریم ورک لاراول طوری در نظر گرفته شده است که نقشه ی شروع مناسبی برای برنامه های کوچک و بزرگ باشد . البته شما برای سازماندهی کردن دایرکتوری های برنامه اتون کاملا آزاد هستن  و تقریبا می توان گفت هیچ محدودیتی از طرف لاراول برای محل قرار گیری  کلاس ها وجود ندارد و Composer  می تواند آنها را بارگزاری نماید .
+
 
 <a name="the-root-directory"></a>
 ## The Root Directory
