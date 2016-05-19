@@ -3,7 +3,7 @@
 - [آشنایی](#introduction)
 - [Root  دایرکتوری ](#the-root-directory)
 - [App دایرکتوری ](#the-app-directory)
-- [Namespacing Your Application](#namespacing-your-application)
+- [فضای نامی برنامه ی شما](#namespacing-your-application)
 
 <a name="introduction"></a>
 ## آشنایی
@@ -55,8 +55,8 @@
 > **توجه داشته باشید:** بسیاری از کلاس های داخل فولدر`app` را می توان با فرمان های artisan ایجاد نمود.به منظور مرور این فرمان ها در ترمینال خود ,   `php artisan list make` را اجرا نمایید.
 
 <a name="namespacing-your-application"></a>
-## Namespacing Your Application
+## فضای نامی برنامه ی شما
 
-As discussed above, the default application namespace is `App`; however, you may change this namespace to match the name of your application, which is easily done via the `app:name` Artisan command. For example, if your application is named "SocialNet", you would run the following command:
+همانطور که در بالا صحبت کردیم namespace یا فضای نام پیش فرض برنامه, App می باشد هرچند که شما به راحتی با توجه به نام برنامه خودتان می توانید آن را تغییر دهید و این کار از طریق فرمان آرتیسان app:name صورت می گیرد . به عنوان مثال اگر نام برنامه ی شما SocialNet باشد , شما فرمان زیر را می توانید اجرا نمایید.
 
 	php artisan app:name SocialNet
