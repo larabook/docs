@@ -43,11 +43,10 @@
 
 قسمت اصلی برنامه ی شما در فولدر app می باشد و این فولدر تحت فضای نامی App است و به صورت خودکار به وسیله ی کامپوزر و استاندارد  [PSR-4 autoloading standard](http://www.php-fig.org/psr/psr-4/) بارگزاری می شود .شما می توانید با فرمان آرتیسان app:name این فضای نامی را به دلخواه خود عوض نمایید.
 
-The `app` directory ships with a variety of additional directories such as `Console`, `Http`, and `Providers`. Think of the `Console` and `Http` directories as providing an API into the "core" of your application. The HTTP protocol and CLI are both mechanisms to interact with your application, but do not actually contain application logic. In other words, they are simply two ways of issuing commands to your application. The `Console` directory contains all of your Artisan commands, while the `Http` directory contains your controllers, filters, and requests.
-
-The `Commands` directory, of course, houses the commands for your application. Commands represent jobs that can be queued by your application, as well as tasks that you can run synchronously within the current request lifecycle.
-
-The `Events` directory, as you might expect, houses event classes. Of course, using classes to represent events is not required; however, if you choose to use them, this directory is the default location they will be created by the Artisan command line.
+فولدر app شامل فولدرهای مختلفی مانند Console, Http و Providers می باشد  . فولدرهای Console, Http را به منظور ارایه دهنده ی API ای داخل برنامه ی خود درنظر بگیرید و همچنین پروتوکل HTTP و CLI هر دو مکانیزمی به منظور تعامل با برنامه شما می باشند.به عبارت دیگر آنها ۲ راه ساده ی ارسال پیام در برنامه ی شما هستند.
+فولدر Console شامل تمام فرمان های Artisan هست و فولدر Http شامل تمام کنترلرها , فیلترها و requests ها می باشد .
+فولدر Commands در واقع محلی برای تمام commandsهای برنامه شما می باشد .
+فولدر Events همانطور که از نام اش انتظار می رود محل نگهداری کلاس های event می باشد .برای استفاده از event ها لازم نیست از این کلاس ها استفاده کنید , با این حال اگر می خواهید از آنها استفاده کنید , این فولدر محل پیشفرض event هایی است که با فرمان Artisan ایجاد می شوند .
 
 The `Handlers` directory contains the handler classes for both commands and events. Handlers receive a command or event and perform logic in response to that command or event being fired.
 
