@@ -3,12 +3,12 @@
 - [آشنایی](#introduction)
 - [Root  دایرکتوری ](#the-root-directory)
 - [App دایرکتوری ](#the-app-directory)
-- [Namespacing Your Application](#namespacing-your-application)
+- [فضای نامی برنامه ی شما](#namespacing-your-application)
 
 <a name="introduction"></a>
 ## آشنایی
 
-به صورت پیش فرض ساختار دایرکتوری ها در فریم ورک لاراول طوری در نظر گرفته شده است که نطقه ی شروع مناسبی برای برنامه های کوچک و بزرگ باشد . البته شما برای سازماندهی کردن دایرکتوری های برنامه ی خودتان ,کاملا آزاد هستین و تقریبا می توان گفت هیچ محدودیتی از طرف لاراول برای محل قرار گیری کلاس ها وجود ندارد و کامپوزر می تواند آنها را بارگزاری نماید .
+به صورت پیش فرض ساختار دایرکتوری ها در فریم ورک لاراول طوری در نظر گرفته شده است که نقطه ی شروع مناسبی برای برنامه های کوچک و بزرگ باشد . البته شما برای سازماندهی کردن دایرکتوری های برنامه ی خودتان ,کاملا آزاد هستین و تقریبا می توان گفت هیچ محدودیتی از طرف لاراول برای محل قرار گیری کلاس ها وجود ندارد و کامپوزر می تواند آنها را بارگزاری نماید .
 
 
 
@@ -20,46 +20,43 @@
 
 همانطور که انتظار می رود , دایرکتوری root شامل کدهای هسته ی برنامه ی شما می باشد .  ما به زودی این فولدر و جزییات آن را شرح می دهیم . 
 
-فولدر bootstrap  شامل فایل های اندکی به منظور راه اندازی فریم ورک و پیکربندی های خودکار می باشد .
+فولدر `bootstrap`  شامل فایل های اندکی به منظور راه اندازی فریم ورک و پیکربندی های خودکار می باشد .
 
 
-فولدر  config همانطور که از نام آن می توان حدس زد شامل فایل های تنظیمات و پیکربندی های برنامه ی شما می باشد .
+فولدر  `config` همانطور که از نام آن می توان حدس زد شامل فایل های تنظیمات و پیکربندی های برنامه ی شما می باشد .
 
 
-فولدر database شامل تمام migration  و seeds های برنامه ی شما می باشد .
+فولدر `database` شامل تمام migration  و seeds های برنامه ی شما می باشد .
 
-فولدر public شامل تمام فایل های بخش Front پروژه و assets  ها می باشد (عکس ها ,استایل ها ,فایل های جاوااسکریپت و غیره)
+فولدر `public` شامل تمام فایل های بخش Front پروژه و assets  ها می باشد (عکس ها ,استایل ها ,فایل های جاوااسکریپت و غیره)
 
-فولدر resources شامل تمام view ها , فایل های مربوط به زبان و همچنین فایل هایی مانند LESS, SASS, CoffeeScript می باشد .
+فولدر `resources` شامل تمام view ها , فایل های مربوط به زبان و همچنین فایل هایی مانند LESS, SASS, CoffeeScript می باشد .
 
-فولدر storage شامل تمام فایل های کامپایل شده قالب Blade  , سشن ها ,کش ها و دیگر فایل های تولید شده به وسلیه فریم ورک می باشد .
+فولدر `storage` شامل تمام فایل های کامپایل شده قالب Blade  , سشن ها ,کش ها و دیگر فایل های تولید شده به وسلیه فریم ورک می باشد .
 
-فولدر test شامل فایل های تست خودکار می باشد.
+فولدر `test` شامل فایل های تست خودکار می باشد.
 
-فولدر vendor شامل  تمام پکیج های مورد نیاز می باشد .
+فولدر `vendor` شامل  تمام پکیج های مورد نیاز می باشد .
 
 <a name="the-app-directory"></a>
 ## App دایرکتوری 
 
-قسمت اصلی برنامه ی شما در فولدر app می باشد و این فولدر تحت فضای نامی App است و به صورت خودکار به وسیله ی کامپوزر و استاندارد  [PSR-4 autoloading standard](http://www.php-fig.org/psr/psr-4/) بارگزاری می شود .شما می توانید با فرمان آرتیسان app:name این فضای نامی را به دلخواه خود عوض نمایید.
+قسمت اصلی برنامه ی شما در فولدر `app` می باشد و این فولدر تحت فضای نامی App است و به صورت خودکار به وسیله ی کامپوزر و استاندارد  [PSR-4 autoloading standard](http://www.php-fig.org/psr/psr-4/) بارگزاری می شود .شما می توانید با فرمان آرتیسان app:name این فضای نامی را به دلخواه خود عوض نمایید.
 
-The `app` directory ships with a variety of additional directories such as `Console`, `Http`, and `Providers`. Think of the `Console` and `Http` directories as providing an API into the "core" of your application. The HTTP protocol and CLI are both mechanisms to interact with your application, but do not actually contain application logic. In other words, they are simply two ways of issuing commands to your application. The `Console` directory contains all of your Artisan commands, while the `Http` directory contains your controllers, filters, and requests.
+فولدر `app` شامل فولدرهای مختلفی مانند `Console`, `Http` و `Providers` می باشد  . فولدرهای `Console`, `Http` را به منظور ارایه دهنده ی API ای داخل برنامه ی خود درنظر بگیرید و همچنین پروتوکل HTTP و CLI هر دو مکانیزمی به منظور تعامل با برنامه شما می باشند.به عبارت دیگر آنها ۲ راه ساده ی ارسال پیام در برنامه ی شما هستند.
+فولدر Console شامل تمام فرمان های Artisan هست و فولدر Http شامل تمام کنترلرها , فیلترها و requests ها می باشد .
+فولدر Commands در واقع محلی برای تمام commandsهای برنامه شما می باشد .
+فولدر Events همانطور که از نام اش انتظار می رود محل نگهداری کلاس های event می باشد .برای استفاده از event ها لازم نیست از این کلاس ها استفاده کنید , با این حال اگر می خواهید از آنها استفاده کنید , این فولدر محل پیشفرض event هایی است که با فرمان Artisan ایجاد می شوند .
 
-The `Commands` directory, of course, houses the commands for your application. Commands represent jobs that can be queued by your application, as well as tasks that you can run synchronously within the current request lifecycle.
+فولدر `Handlers` شامل تمام کلاس های handler برای commands و events ها می باشد.Handlers ها یک command یا event را دریافت می کنند و زمانی که آنها فراخوانی می شوند , منطق آنها را اجرا کرده و در پاسخ به آنها ارسال می کند .
+فولدر `Services` شامل سرویس هایی است که برنامه ی شما در طول اجرا به آن نیاز دارد .برای مثال سرویس `Registrar` مسئول اعتبارسنجی  و ایجاد یک کاربر جدید در برنامه ی شما است  و یا سرویس هایی که با API های بیرونی ارتباط برقرار می کنند و یا حتی سرویس هایی که داده ها را در برنامه ی شما جمع آوری می کنند  .
+فولدر `Exceptions` شامل تمام استثناها و exception های برنامه ی شما است و همچنین محل مناسبی برای رسیدگی به exception های رخ داده شده در برنامه می باشد .
 
-The `Events` directory, as you might expect, houses event classes. Of course, using classes to represent events is not required; however, if you choose to use them, this directory is the default location they will be created by the Artisan command line.
-
-The `Handlers` directory contains the handler classes for both commands and events. Handlers receive a command or event and perform logic in response to that command or event being fired.
-
-The `Services` directory contains various "helper" services your application needs to function. For example, the `Registrar` service included with Laravel is responsible for validating and creating new users of your application. Other examples might be services to interact with external APIs, metrics systems, or even services that aggregate data from your own application.
-
-The `Exceptions` directory contains your application's exception handler and is also a good place to stick any exceptions thrown by your application.
-
-> **Note:** Many of the classes in the `app` directory can be generated by Artisan via commands. To review the available commands, run the `php artisan list make` command in your terminal.
+> **توجه داشته باشید:** بسیاری از کلاس های داخل فولدر`app` را می توان با فرمان های artisan ایجاد نمود.به منظور مرور این فرمان ها در ترمینال خود ,   `php artisan list make` را اجرا نمایید.
 
 <a name="namespacing-your-application"></a>
-## Namespacing Your Application
+## فضای نامی برنامه ی شما
 
-As discussed above, the default application namespace is `App`; however, you may change this namespace to match the name of your application, which is easily done via the `app:name` Artisan command. For example, if your application is named "SocialNet", you would run the following command:
+همانطور که در بالا صحبت کردیم namespace یا فضای نام پیش فرض برنامه, App می باشد هرچند که شما به راحتی با توجه به نام برنامه خودتان می توانید آن را تغییر دهید و این کار از طریق فرمان آرتیسان app:name صورت می گیرد . به عنوان مثال اگر نام برنامه ی شما SocialNet باشد , شما فرمان زیر را می توانید اجرا نمایید.
 
 	php artisan app:name SocialNet
